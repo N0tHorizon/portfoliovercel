@@ -54,6 +54,69 @@
     /* ── LAYOUT ─────────────────────────────────────────── */
     .container { max-width: 680px; margin: 0 auto; padding: 0 24px; }
 
+    /* ── KEYFRAMES ──────────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes avatarPop {
+      0%   { opacity: 0; transform: scale(0.82); }
+      65%  { transform: scale(1.05); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50%       { transform: translateY(-6px); }
+    }
+    @keyframes navSlideUp {
+      from { opacity: 0; transform: translateX(-50%) translateY(16px); }
+      to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+    }
+
+    /* ── HERO ANIMATIONS ────────────────────────────────── */
+    .hero-text h1 { animation: fadeUp 0.5s ease 0.05s both; }
+    .hero-text p  { animation: fadeUp 0.5s ease 0.15s both; }
+    .avatar {
+      animation: avatarPop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s both,
+                 float 4s ease-in-out 1s infinite;
+    }
+
+    /* ── SCROLL REVEAL ──────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Stagger work/project entries */
+    .reveal.visible .entry { animation: fadeUp 0.4s ease both; }
+    .reveal.visible .entry:nth-child(1) { animation-delay: 0.05s; }
+    .reveal.visible .entry:nth-child(2) { animation-delay: 0.10s; }
+    .reveal.visible .entry:nth-child(3) { animation-delay: 0.15s; }
+    .reveal.visible .entry:nth-child(4) { animation-delay: 0.20s; }
+    .reveal.visible .entry:nth-child(5) { animation-delay: 0.25s; }
+
+    /* Stagger skill pills */
+    .reveal.visible .skill-pill { animation: fadeUp 0.35s ease both; }
+    .reveal.visible .skill-pill:nth-child(1) { animation-delay: 0.04s; }
+    .reveal.visible .skill-pill:nth-child(2) { animation-delay: 0.08s; }
+    .reveal.visible .skill-pill:nth-child(3) { animation-delay: 0.12s; }
+    .reveal.visible .skill-pill:nth-child(4) { animation-delay: 0.16s; }
+    .reveal.visible .skill-pill:nth-child(5) { animation-delay: 0.20s; }
+    .reveal.visible .skill-pill:nth-child(6) { animation-delay: 0.24s; }
+    .reveal.visible .skill-pill:nth-child(7) { animation-delay: 0.28s; }
+    .reveal.visible .skill-pill:nth-child(8) { animation-delay: 0.32s; }
+    .reveal.visible .skill-pill:nth-child(9) { animation-delay: 0.36s; }
+
+    /* Nav entrance */
+    .floating-nav {
+      animation: navSlideUp 0.5s ease 0.35s both;
+    }
+
     /* ── HERO ───────────────────────────────────────────── */
     .hero {
       display: flex;
@@ -101,7 +164,7 @@
     }
     .about-text { color: var(--text-muted); font-size: 0.97rem; line-height: 1.75; }
 
-    /* ── ENTRY ROWS (work + projects) ───────────────────── */
+    /* ── ENTRY ROWS ─────────────────────────────────────── */
     .entry-list { display: flex; flex-direction: column; gap: 2px; }
     .entry {
       display: flex;
@@ -109,9 +172,12 @@
       gap: 16px;
       padding: 10px 8px;
       border-radius: 10px;
-      transition: background 0.15s;
+      transition: background 0.15s, transform 0.2s ease;
     }
-    .entry:hover { background: var(--bg-subtle); }
+    .entry:hover {
+      background: var(--bg-subtle);
+      transform: translateX(4px);
+    }
     .entry.project { align-items: flex-start; }
 
     .entry-icon {
@@ -128,6 +194,11 @@
       font-size: 0.85rem;
       font-weight: 700;
       color: var(--text-muted);
+      transition: border-color 0.2s, transform 0.2s ease;
+    }
+    .entry:hover .entry-icon {
+      border-color: var(--accent);
+      transform: scale(1.08);
     }
     .entry.project .entry-icon { margin-top: 2px; }
     .entry-icon img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
@@ -142,6 +213,8 @@
       margin-top: 4px;
       line-height: 1.55;
     }
+    .entry-body .proj-desc a { color: var(--accent); text-decoration: none; font-weight: 500; }
+    .entry-body .proj-desc a:hover { text-decoration: underline; }
     .entry-body .proj-stack {
       display: block;
       font-size: 0.78rem;
@@ -169,6 +242,11 @@
       color: var(--pill-text);
       font-size: 0.83rem;
       font-weight: 500;
+      transition: border-color 0.2s, transform 0.2s ease, background 0.2s;
+    }
+    .skill-pill:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
     }
     .pill-icon { font-size: 0.95rem; line-height: 1; }
 
@@ -181,7 +259,9 @@
       padding: 52px 36px 40px;
       text-align: center;
       overflow: hidden;
+      transition: border-color 0.3s;
     }
+    .contact-box:hover { border-color: var(--accent); }
     .contact-box::before {
       content: '';
       position: absolute;
@@ -245,10 +325,11 @@
       align-items: center;
       justify-content: center;
       color: var(--text-muted);
-      transition: background 0.15s, color 0.15s;
+      transition: background 0.15s, color 0.15s, transform 0.2s ease;
       text-decoration: none;
     }
-    .nav-btn:hover { background: var(--bg-subtle); color: var(--text); }
+    .nav-btn:hover { background: var(--bg-subtle); color: var(--text); transform: translateY(-2px); }
+    .nav-btn:active { transform: translateY(0); }
     .nav-btn svg { width: 18px; height: 18px; }
 
     /* ── RESPONSIVE ─────────────────────────────────────── */
@@ -257,6 +338,12 @@
       .avatar { width: 80px; height: 80px; }
       .entry-date { display: none; }
       .contact-box { padding: 48px 24px 36px; }
+    }
+
+    /* Respect reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition-duration: 0.01ms !important; }
+      .reveal { opacity: 1; transform: none; }
     }
   </style>
 </head>
@@ -271,28 +358,25 @@
       <p>I'm a senior web quality assurance engineer.</p>
     </div>
     <div class="avatar">
-        <img src="pfp.png" alt="Horizon" />
-      <div class="avatar"></div>
+      <img src="pfp.png" alt="Horizon" />
     </div>
   </div>
 
   <!-- ── ABOUT ───────────────────────────────────────────── -->
-  <section id="about">
+  <section id="about" class="reveal">
     <h2>About</h2>
     <p class="about-text">
-      I'm a quality assurance engineer from america, Ive been in the industry for almost 5 years.
+      I'm a quality assurance engineer from America. I've been in the industry for almost 5 years.
     </p>
   </section>
 
   <!-- ── WORK EXPERIENCE ────────────────────────────────── -->
-  <section id="work">
+  <section id="work" class="reveal">
     <h2>Work Experience</h2>
     <div class="entry-list">
 
       <div class="entry">
-        <div class="entry-icon">
-          <img src="central.png" alt="Central" />
-        </div>
+        <div class="entry-icon"><img src="central.png" alt="Central" /></div>
         <div class="entry-body">
           <strong>Central</strong>
           <span class="role">Lead QA</span>
@@ -301,9 +385,7 @@
       </div>
 
       <div class="entry">
-        <div class="entry-icon">
-          <img src="octopus.png" alt="octopusdeploy" />
-        </div>
+        <div class="entry-icon"><img src="octopus.png" alt="Octopus Deploy" /></div>
         <div class="entry-body">
           <strong>Octopus Deploy</strong>
           <span class="role">Bug Hunter via Bugcrowd</span>
@@ -312,9 +394,7 @@
       </div>
 
       <div class="entry">
-        <div class="entry-icon">
-          <img src="shopify.png" alt="shopify">
-        </div>
+        <div class="entry-icon"><img src="shopify.png" alt="Shopify" /></div>
         <div class="entry-body">
           <strong>Shopify</strong>
           <span class="role">Bug Hunter via Hackerone</span>
@@ -335,26 +415,27 @@
   </section>
 
   <!-- ── PROJECTS ───────────────────────────────────────── -->
-  <section id="projects">
+  <section id="projects" class="reveal">
     <h2>Projects</h2>
     <div class="entry-list">
 
       <div class="entry project">
         <div class="entry-icon">⛉</div>
         <div class="entry-body">
-          <strong>Windows Telementry Blocker</strong>
+          <strong>Windows Telemetry Blocker</strong>
           <span class="proj-desc">
-            <a href="https://github.com/N0tHorizon/WindowsTelemetryBlocker">Github Project</a>
+            <a href="https://github.com/N0tHorizon/WindowsTelemetryBlocker" target="_blank" rel="noopener">GitHub Project</a>
           </span>
           <span class="proj-stack">Powershell • Batchfile</span>
         </div>
         <div class="entry-date">Sep 2025 – Present</div>
       </div>
+
     </div>
   </section>
 
   <!-- ── SKILLS ─────────────────────────────────────────── -->
-  <section id="skills">
+  <section id="skills" class="reveal">
     <h2>Skills</h2>
     <div class="skill-list">
       <span class="skill-pill"><span class="pill-icon">💎</span> Ruby</span>
@@ -364,18 +445,18 @@
       <span class="skill-pill"><span class="pill-icon">☁️</span> Cloudflare</span>
       <span class="skill-pill"><span class="pill-icon">🟢</span> Node.js</span>
       <span class="skill-pill"><span class="pill-icon">▲</span> Next.js</span>
-      <span class="skill-pill"><span class="pill-icon">💻</span> Seleium IDE</span>
+      <span class="skill-pill"><span class="pill-icon">💻</span> Selenium IDE</span>
       <span class="skill-pill"><span class="pill-icon">🐧</span> Linux</span>
     </div>
   </section>
 
   <!-- ── CONTACT ─────────────────────────────────────────── -->
-  <div class="contact-wrap" id="contact">
+  <div class="contact-wrap reveal" id="contact">
     <div class="contact-box">
       <div class="contact-tag">Contact</div>
       <h2>Get in Touch</h2>
       <p>
-        Want to get in touch? Email me at lvblue0022@proton.me</a>
+        Want to get in touch? Email me at <a href="mailto:lvblue0022@proton.me">lvblue0022@proton.me</a>
       </p>
     </div>
   </div>
@@ -420,6 +501,7 @@
 </nav>
 
 <script>
+  // ── THEME ──────────────────────────────────────────────
   const root   = document.documentElement;
   const toggle = document.getElementById('themeToggle');
   const sun    = document.getElementById('iconSun');
@@ -440,6 +522,18 @@
     sun.style.display  = t === 'dark'  ? 'block' : 'none';
     moon.style.display = t === 'light' ? 'block' : 'none';
   }
+
+  // ── SCROLL REVEAL ──────────────────────────────────────
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 </script>
 
 </body>
