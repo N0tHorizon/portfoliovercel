@@ -34,13 +34,6 @@ Quality Assurance Engineer with strong skills in bug tracking and test developme
 
 ---
 
-## EDUCATION AND TRAINING
-**High School Diploma**  
-Central High School - Memphis, TN
-Currently Enrolled
-
----
-
 ## CONTACT
 * **Email:** lvblue0022@proton.me
 * **WWW:** https://gghorizon.vercel.app/
