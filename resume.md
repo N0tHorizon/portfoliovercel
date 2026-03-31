@@ -1,7 +1,7 @@
-# Horizon | Intermediate Quality Assurance Engineer
+# Horizon | Quality Assurance Engineer
 
 ## Summary
-Intermediate Web QA Engineer for the past 5 years. I have been able to identify over 140 bugs with all the companies I've worked for. I have been awarded over 20 bug hunting bouties and had over 200 hours of total testing time. Looking to expand to software QA in the near future, but recently I have only done web QA. I've reported over 30 crital bugs and over 15 secuirty-based bugs.
+Web QA Engineer for the past 5 years. I have been able to identify over 140 bugs with all the companies I've worked for. I have been awarded over 20 bug hunting bounties and had over 200 hours of total testing time. Looking to expand to software QA in the near future, but recently I have only done web QA. I've reported over 30 critical bugs and over 15 security-based bugs.
 
 ## Experience
 Central | Lead QA
