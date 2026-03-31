@@ -1,22 +1,61 @@
-# Horizon | Quality Assurance Engineer
+# LANDON VANCE
 
-## Summary
-Web QA Engineer for the past 5 years. I have been able to identify over 140 bugs with all the companies I've worked for. I have been awarded over 20 bug hunting bounties and had over 200 hours of total testing time. Looking to expand to software QA in the near future, but recently I have only done web QA. I've reported over 30 critical bugs and over 15 security-based bugs.
+---
 
-## Experience
-Central | Lead QA
-*July 2025 – Present*
+## SUMMARY
+Quality Assurance Engineer with strong skills in bug tracking and test development. Committed to creating testing processes and ensuring high-quality website delivery.
 
-Brilliant | QA
-*January 2026 – Present*
+---
 
-Octopus Deploy | Bug Hunter via Bugcrowd
-*March 2025 – Present*
+## EXPERIENCE
 
-Shopify | Bounty Hunter
-*Oct 2021 – January 2026*
+**Bug Hunter, 03/2026 - Current**  
+**Octopus Deploy**
+* Developed tests and executed them to report the results to the platform.
+* Developed deployment strategies using Octopus Deploy for efficient software releases.
+* Collaborated with cross-functional teams to enhance deployment processes and workflows.
+* Provided technical support to users, troubleshooting deployment-related issues effectively.
 
-## Technical Skills
-Web QA Tools: Selenium | Cypress | Firefox Dev Tools
-Programming Languages: Ruby | HTML | JavaScript | Powershell
-Networking: Wireshark | Cloudflare | DNS Configuration
+**Quality Assurance Engineer, 01/2026 - Current**  
+**Brilliant**
+* Assessed bot updates before production deployment to ensure quality standards.
+
+**QA Team Lead, 07/2025 - Current**  
+**centralbot.xyz**
+* Facilitated QA sessions with team members, improving collaboration and refining testing processes.
+* Documented 60+ bugs related to website functionality, contributing to overall product quality.
+* Proposed updates and ideas to development team, directly influencing product enhancements.
+* Evaluated applications submitted by fellow QA members for quality assurance.
+
+**Bug Hunter, 10/2021 - 01/2026**  
+**Shopify**
+* Submitted 18 bugs to platform, with four classified as medium priority.
+* Confirmed validity of all reported bugs within project scope.
+
+---
+
+## EDUCATION AND TRAINING
+**High School Diploma**  
+Central High School - Memphis, TN
+Currently Enrolled
+
+---
+
+## CONTACT
+* **Email:** lvblue0022@proton.me
+* **WWW:** https://gghorizon.vercel.app/
+
+---
+
+## SKILLS
+* Quality assurance
+* Test plan development
+* Test development
+* Bug tracking
+* Test environment setup
+* Testing efficiency
+* QA reporting
+* Data analysis
+* User feedback integration
+* Technical documentation
+* Team collaboration
