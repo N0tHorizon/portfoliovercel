@@ -436,14 +436,14 @@
   }
 
   // ── LAST UPDATED DATE ───────────────────────────────────
-  // Change this string whenever you update your resume/current
+  // Change this string whenever you update your resume.md
   const LAST_UPDATED = "April 2026";
   document.getElementById('lastUpdated').textContent = LAST_UPDATED;
 
-  // ── FETCH & RENDER resume/current ────────────────────────────
+  // ── FETCH & RENDER resume.md ────────────────────────────
   const contentEl = document.getElementById('resumeContent');
 
-  fetch('resume/current')
+  fetch('resume.md')
     .then(res => {
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       return res.text();
@@ -460,7 +460,7 @@
       contentEl.innerHTML = `
         <div class="state-box">
           <span class="icon">📄</span>
-          <p>Couldn't load <code>resume/current</code>.<br>Make sure it's in the same folder as this file.</p>
+          <p>Couldn't load <code>resume.md</code>.<br>Make sure it's in the same folder as this file.</p>
           <p style="font-size:0.78rem;color:var(--text-dim)">${err.message}</p>
         </div>
       `;
