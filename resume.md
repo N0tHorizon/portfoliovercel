@@ -12,9 +12,6 @@ Quality Assurance Engineer with strong skills in bug tracking and test developme
 **Bug Hunter, 03/2026 - Current**  
 **Octopus Deploy**
 * Developed tests and executed them to report the results to the platform.
-* Developed deployment strategies using Octopus Deploy for efficient software releases.
-* Collaborated with cross-functional teams to enhance deployment processes and workflows.
-* Provided technical support to users, troubleshooting deployment-related issues effectively.
 
 **Quality Assurance Engineer, 01/2026 - Current**  
 **Brilliant**
