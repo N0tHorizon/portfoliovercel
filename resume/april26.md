@@ -1,4 +1,4 @@
-# LANDON VANCE
+# Horizon
 
 ---
 
