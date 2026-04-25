@@ -28,7 +28,7 @@ Quality Assurance Engineer with almost 3 years of experience in bug tracking, te
 - Tested update releases on a voluntary basis, verifying expected behavior and reporting regressions.
 
 **QA Engineer** — Private Companies *(2 engagements, details withheld by request)*
-- Conducted quality assurance work across two private engagements under confidentiality agreements.
+- Conducted quality assurance work across two private engagements.
 
 ---
 
