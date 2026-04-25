@@ -1,51 +1,37 @@
 # Horizon
+**Quality Assurance Engineer**
+
+📧 [lvblue0022@proton.me](mailto:lvblue0022@proton.me) • 🌐 [gghorizon.vercel.app](https://gghorizon.vercel.app/) • Discord • [GitHub](https://github.com/N0tHorizon)
 
 ---
 
-## SUMMARY
-Quality Assurance Engineer with strong skills in bug tracking and test development. Committed to creating testing processes and ensuring high-quality website delivery.
+## Summary
+
+Quality Assurance Engineer with almost 3 years of experience in bug tracking, test development, and QA team leadership. Experienced across Discord bot ecosystems and open source software projects. Committed to building structured testing processes and ensuring high-quality product delivery.
 
 ---
 
-## EXPERIENCE
+## Experience
 
-**Bug Hunter, 03/2026 - Current**  
-**Octopus Deploy**
-* Developed tests and executed them to report the results to the platform.
+**QA Team Lead** — [Central](http://centralbot.xyz)
+*07/2025 – Present*
+- Facilitated QA sessions with team members, improving collaboration and refining testing processes.
+- Documented 60+ bugs related to bot and website functionality, contributing to overall product quality.
+- Proposed updates and ideas to the development team, directly influencing product enhancements.
+- Evaluated applications submitted by QA candidates and onboarded new team members.
 
-**Quality Assurance Engineer, 01/2026 - Current**  
-**Brilliant**
-* Assessed bot updates before production deployment to ensure quality standards.
+**Quality Assurance Engineer** — Brilliant
+*01/2026 – Present*
+- Assessed bot updates before production deployment to ensure quality standards were met.
 
-**QA Team Lead, 07/2025 - Current**  
-**centralbot.xyz**
-* Facilitated QA sessions with team members, improving collaboration and refining testing processes.
-* Documented 60+ bugs related to website functionality, contributing to overall product quality.
-* Proposed updates and ideas to development team, directly influencing product enhancements.
-* Evaluated applications submitted by fellow QA members for quality assurance.
+**Voluntary QA Contributor** — [Win11Debloat](https://github.com/Raphire/Win11Debloat) *(Open Source)*
+- Tested update releases on a voluntary basis, verifying expected behavior and reporting regressions.
 
-**Bug Hunter, 10/2021 - 01/2026**  
-**Shopify**
-* Submitted 18 bugs to platform, with four classified as medium priority.
-* Confirmed validity of all reported bugs within project scope.
+**QA Engineer** — Private Companies *(2 engagements, details withheld by request)*
+- Conducted quality assurance work across two private engagements under confidentiality agreements.
 
 ---
 
-## CONTACT
-* **Email:** lvblue0022@proton.me
-* **WWW:** https://gghorizon.vercel.app/
+## Skills
 
----
-
-## SKILLS
-* Quality assurance
-* Test plan development
-* Test development
-* Bug tracking
-* Test environment setup
-* Testing efficiency
-* QA reporting
-* Data analysis
-* User feedback integration
-* Technical documentation
-* Team collaboration
+Quality Assurance • Bug Tracking • Test Plan Development • Test Development • QA Reporting • Test Environment Setup • Technical Documentation • Team Collaboration • User Feedback Integration • Powershell • HTML • Linux • Selenium IDE • Cypress • Node.js
