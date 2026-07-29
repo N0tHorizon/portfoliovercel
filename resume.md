@@ -14,11 +14,11 @@ Quality Assurance Engineer with almost 3 years of experience in bug tracking, te
 ## Experience
 
 **QA Team Lead** — [Central](http://centralbot.xyz)
-*7/9/2025 – 5/1/2026*
-- Facilitated QA sessions with team members, improving collaboration and refining testing processes.
-- Documented 60+ bugs related to bot and website functionality, contributing to overall product quality.
-- Proposed updates and ideas to the development team, directly influencing product enhancements.
-- Evaluated applications submitted by QA candidates and onboarded new team members.
+*7/9/2025 – Current*
+- Hosted QA sessions with team members.
+- Documented 60+ bugs related to bot and website functions.
+- Proposed updates and ideas to the development team.
+- Reviewed applications submitted by QA candidates.
 
 **Quality Assurance Engineer** — Brilliant
 *01/2026 – Present*
