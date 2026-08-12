@@ -1,0 +1,105 @@
+{
+  "personal": {
+    "name": "Horizon",
+    "tagline": "Senior web Quality Assurance Engineer and a Junior software Quality Assurance Engineer",
+    "about": "I've been in web Quality Assurance for almost 3 years, and I have recently learned software Quality Assurance. Most of my work has been for discord bot websites, but also some open source projects.",
+    "email": "lvblue0022@proton.me",
+    "contactMessage": "Want to get in touch? Email me at",
+    "workStatus": 1
+  },
+  "stats": [
+    {
+      "icon": "",
+      "value": "140",
+      "suffix": "+",
+      "label": "Bugs reported"
+    },
+    {
+      "icon": "",
+      "value": "4",
+      "suffix": "",
+      "label": "Companies worked with — <span style=\"color:var(--accent)\">2 public</span>"
+    },
+    {
+      "icon": "",
+      "value": "200",
+      "suffix": "+ hrs",
+      "label": "Testing Time"
+    }
+  ],
+  "workExperience": [
+    {
+      "company": "Central",
+      "role": "Lead QA",
+      "dateRange": "July 2025 – Current",
+      "icon": "central.png",
+      "isImage": true
+    },
+    {
+      "company": "Brilliant",
+      "role": "QA",
+      "dateRange": "January 2026 – Present",
+      "icon": "B",
+      "isImage": false
+    },
+    {
+      "company": "Win11Debloat",
+      "role": "Voluntary QA Contributor — Open Source",
+      "dateRange": "Contributor",
+      "icon": "🪟",
+      "isImage": false
+    }
+  ],
+  "projects": [
+    {
+      "name": "Windows Telemetry Blocker",
+      "description": "<a href=\"https://github.com/N0tHorizon/WindowsTelemetryBlocker\" target=\"_blank\" rel=\"noopener\">GitHub Project</a>",
+      "stack": "Powershell • Batchfile",
+      "dateRange": "Sep 2025 – Present",
+      "icon": "⛉",
+      "isImage": false
+    }
+  ],
+  "skills": [
+    {
+      "name": "Ruby",
+      "icon": "💎"
+    },
+    {
+      "name": "HTML",
+      "icon": "🌐"
+    },
+    {
+      "name": "Cypress",
+      "icon": "✖"
+    },
+    {
+      "name": "Powershell",
+      "icon": "🪣"
+    },
+    {
+      "name": "Cloudflare",
+      "icon": "☁️"
+    },
+    {
+      "name": "Node.js",
+      "icon": "🟢"
+    },
+    {
+      "name": "Next.js",
+      "icon": "▲"
+    },
+    {
+      "name": "Selenium IDE",
+      "icon": "💻"
+    },
+    {
+      "name": "Linux",
+      "icon": "🐧"
+    }
+  ],
+  "socialLinks": {
+    "discord": "https://discord.com/users/1078466874301493368",
+    "github": "https://github.com/N0tHorizon"
+  }
+}

@@ -16,51 +16,71 @@
   <style>
     /* ── TOKENS (identical to index.html) ─────────────── */
     :root {
-      --bg:         #ffffff;
-      --bg-subtle:  #f6f8fa;
-      --border:     #e2e8f0;
-      --text:       #0f172a;
-      --text-muted: #64748b;
-      --text-dim:   #94a3b8;
-      --accent:     #3b82f6;
-      --nav-bg:     rgba(255,255,255,0.85);
-      --nav-border: #e2e8f0;
-      --pill-bg:    #f1f5f9;
-      --pill-text:  #334155;
-      --dot-color:  #cbd5e1;
+      --text:         #0f172a;
+      --text-muted:   #64748b;
+      --text-dim:     #94a3b8;
+      --accent:       #3b82f6;
+      --glass-light:  rgba(255, 255, 255, 0.55);
+      --glass-border-light: rgba(255, 255, 255, 0.35);
+      --glass-dark:   rgba(20, 20, 30, 0.45);
+      --glass-border-dark: rgba(255, 255, 255, 0.15);
+      --nav-bg:       rgba(255, 255, 255, 0.7);
+      --nav-border:   rgba(255, 255, 255, 0.4);
+      --pill-bg:      rgba(255, 255, 255, 0.4);
+      --pill-text:    #334155;
     }
+    
     [data-theme="dark"] {
-      --bg:         #0f1117;
-      --bg-subtle:  #161b22;
-      --border:     #30363d;
-      --text:       #f0f6fc;
-      --text-muted: #8b949e;
-      --text-dim:   #484f58;
-      --accent:     #58a6ff;
-      --nav-bg:     rgba(22,27,34,0.85);
-      --nav-border: #30363d;
-      --pill-bg:    #21262d;
-      --pill-text:  #c9d1d9;
-      --dot-color:  #30363d;
+      --text:         #f0f6fc;
+      --text-muted:   #8b949e;
+      --text-dim:     #484f58;
+      --accent:       #58a6ff;
+      --glass-light:  rgba(20, 20, 30, 0.45);
+      --glass-border-light: rgba(255, 255, 255, 0.15);
+      --glass-dark:   rgba(20, 20, 30, 0.5);
+      --glass-border-dark: rgba(255, 255, 255, 0.12);
+      --nav-bg:       rgba(20, 20, 30, 0.6);
+      --nav-border:   rgba(255, 255, 255, 0.15);
+      --pill-bg:      rgba(255, 255, 255, 0.12);
+      --pill-text:    #c9d1d9;
     }
 
     /* ── RESET ─────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
+
+    /* ── VIDEO BACKGROUND ───────────────────────────────── */
+    .bg-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: var(--bg);
+      background-image: url('background.png');
+      background-attachment: fixed;
+      background-size: cover;
+      background-position: center;
+      background-color: #ffffff;
       color: var(--text);
       line-height: 1.6;
-      transition: background 0.2s, color 0.2s;
+      transition: color 0.2s;
       padding-bottom: 120px;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
     }
 
+    [data-theme="dark"] body {
+      background-color: #0f1117;
+    }
+
     /* ── LAYOUT ─────────────────────────────────────────── */
-    .container { max-width: 680px; margin: 0 auto; padding: 0 24px; width: 100%; }
+    .container { max-width: 720px; margin: 0 auto; padding: 16px; width: 100%; }
     .page-wrap  { flex: 1; }
 
     /* ── KEYFRAMES ──────────────────────────────────────── */
@@ -76,34 +96,54 @@
     /* ── TAB SWITCHER ───────────────────────────────────── */
     .tab-bar {
       display: flex;
-      gap: 4px;
-      padding: 20px 0 0;
+      gap: 8px;
+      padding: 20px 0 32px;
     }
     .tab-link {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 6px 16px;
-      border-radius: 999px;
+      padding: 8px 16px;
+      border-radius: 12px;
       font-size: 0.85rem;
       font-weight: 600;
       text-decoration: none;
       color: var(--text-muted);
-      background: transparent;
-      border: 1px solid transparent;
-      transition: all 0.15s ease;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      transition: all 0.2s ease;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       cursor: pointer;
     }
+
+    [data-theme="dark"] .tab-link {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(255, 255, 255, 0.08);
+    }
+
     .tab-link:hover {
-      background: var(--bg-subtle);
+      background: rgba(255, 255, 255, 0.12);
       color: var(--text);
-      border-color: var(--border);
+      border-color: rgba(255, 255, 255, 0.2);
     }
+
+    [data-theme="dark"] .tab-link:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
     .tab-link.active {
-      background: var(--bg-subtle);
+      background: rgba(255, 255, 255, 0.15);
       color: var(--text);
-      border-color: var(--border);
+      border-color: rgba(255, 255, 255, 0.25);
     }
+
+    [data-theme="dark"] .tab-link.active {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
     .tab-link svg { width: 14px; height: 14px; }
 
     /* ── PAGE HEADER ────────────────────────────────────── */
@@ -125,11 +165,37 @@
 
     /* ── RESUME CONTENT ─────────────────────────────────── */
     .resume-wrap {
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      background: var(--bg-subtle);
-      padding: 40px 44px;
+      background: var(--glass-light);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--glass-border-light);
+      border-radius: 28px;
+      padding: 48px 52px;
       animation: fadeUp 0.5s ease 0.15s both;
+      box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.08),
+        inset 0 1px 1px rgba(255, 255, 255, 0.6);
+      transition: all 0.3s ease;
+    }
+
+    [data-theme="dark"] .resume-wrap {
+      background: var(--glass-dark);
+      border-color: var(--glass-border-dark);
+      box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.3),
+        inset 0 1px 1px rgba(255, 255, 255, 0.08);
+    }
+
+    .resume-wrap:hover {
+      box-shadow:
+        0 12px 48px rgba(0, 0, 0, 0.12),
+        inset 0 1px 1px rgba(255, 255, 255, 0.6);
+    }
+
+    [data-theme="dark"] .resume-wrap:hover {
+      box-shadow:
+        0 12px 48px rgba(0, 0, 0, 0.4),
+        inset 0 1px 1px rgba(255, 255, 255, 0.08);
     }
 
     /* Markdown rendered styles */
@@ -148,7 +214,7 @@
       color: var(--accent);
       margin: 28px 0 10px;
       padding-bottom: 6px;
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
     .resume-content h3 {
       font-size: 0.97rem;
@@ -198,15 +264,17 @@
     .resume-content code {
       font-family: 'SF Mono', 'Fira Code', monospace;
       font-size: 0.82rem;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      padding: 1px 6px;
-      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 2px 8px;
+      border-radius: 6px;
       color: var(--accent);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
     }
     .resume-content hr {
       border: none;
-      border-top: 1px solid var(--border);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
       margin: 20px 0;
     }
 
@@ -242,16 +310,35 @@
     .resume-footer {
       margin-top: 20px;
       padding: 16px 20px;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      background: var(--bg-subtle);
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 16px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 12px;
       flex-wrap: wrap;
       animation: fadeUp 0.5s ease 0.25s both;
+      transition: all 0.3s ease;
     }
+
+    [data-theme="dark"] .resume-footer {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(255, 255, 255, 0.08);
+    }
+
+    .resume-footer:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    [data-theme="dark"] .resume-footer:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
     .resume-footer .footer-left {
       display: flex;
       align-items: center;
@@ -282,17 +369,22 @@
       transform: translateX(-50%);
       display: flex;
       align-items: center;
-      gap: 2px;
-      padding: 6px 10px;
+      gap: 4px;
+      padding: 8px 12px;
       background: var(--nav-bg);
       border: 1px solid var(--nav-border);
       border-radius: 999px;
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      box-shadow: 0 4px 24px rgba(0,0,0,0.08), 0 1px 4px rgba(0,0,0,0.06);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
       z-index: 100;
       animation: navSlideUp 0.5s ease 0.35s both;
     }
+
+    [data-theme="dark"] .floating-nav {
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    }
+
     .nav-btn {
       width: 40px; height: 40px;
       border-radius: 50%;
@@ -303,16 +395,70 @@
       align-items: center;
       justify-content: center;
       color: var(--text-muted);
-      transition: background 0.15s, color 0.15s, transform 0.2s ease;
+      transition: all 0.2s ease;
       text-decoration: none;
     }
-    .nav-btn:hover { background: var(--bg-subtle); color: var(--text); transform: translateY(-2px); }
-    .nav-btn:active { transform: translateY(0); }
+    .nav-btn:hover {
+      background: rgba(255, 255, 255, 0.15);
+      color: var(--text);
+      transform: translateY(-3px);
+    }
+
+    [data-theme="dark"] .nav-btn:hover {
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .nav-btn:active { transform: translateY(-1px); }
     .nav-btn svg { width: 18px; height: 18px; }
+
+    /* ── VIDEO CONTROL BUTTON ───────────────────────────── */
+    .video-control-btn {
+      position: fixed;
+      top: 28px;
+      left: 28px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid var(--nav-border);
+      background: var(--nav-bg);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      transition: all 0.2s ease;
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+      z-index: 99;
+    }
+
+    [data-theme="dark"] .video-control-btn {
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    }
+
+    .video-control-btn:hover {
+      background: rgba(255, 255, 255, 0.15);
+      color: var(--text);
+      transform: scale(1.1);
+    }
+
+    [data-theme="dark"] .video-control-btn:hover {
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .video-control-btn:active {
+      transform: scale(0.95);
+    }
+
+    .video-control-btn svg {
+      width: 20px;
+      height: 20px;
+    }
 
     /* ── RESPONSIVE ─────────────────────────────────────── */
     @media (max-width: 520px) {
-      .resume-wrap { padding: 28px 22px; }
+      .resume-wrap { padding: 32px 24px; }
       .resume-footer { flex-direction: column; align-items: flex-start; gap: 6px; }
     }
     @media (prefers-reduced-motion: reduce) {
@@ -321,6 +467,24 @@
   </style>
 </head>
 <body>
+
+<!-- ── VIDEO BACKGROUND ───────────────────────────────── -->
+<video id="bgVideo" class="bg-video" autoplay muted loop playsinline>
+  <source src="background.mp4" type="video/mp4">
+</video>
+
+<!-- ── VIDEO CONTROL ─────────────────────────────────── -->
+<button id="videoMuteBtn" class="video-control-btn" title="Unmute video" aria-label="Toggle video audio">
+  <svg id="iconVolume" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+    <path d="M15.54 8.46a7 7 0 0 1 0 9.9M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+  </svg>
+  <svg id="iconVolumeMuted" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" style="display:none">
+    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+    <line x1="23" y1="9" x2="17" y2="15"></line>
+    <line x1="17" y1="9" x2="23" y2="15"></line>
+  </svg>
+</button>
 
 <div class="page-wrap">
   <div class="container">
@@ -434,6 +598,41 @@
     sun.style.display  = t === 'dark'  ? 'block' : 'none';
     moon.style.display = t === 'light' ? 'block' : 'none';
   }
+
+  // ── VIDEO CONTROL ──────────────────────────────────────
+  const bgVideo = document.getElementById('bgVideo');
+  const muteBtn = document.getElementById('videoMuteBtn');
+  const iconVolume = document.getElementById('iconVolume');
+  const iconVolumeMuted = document.getElementById('iconVolumeMuted');
+
+  // Check if video exists and try to load it
+  bgVideo.addEventListener('error', () => {
+    bgVideo.style.display = 'none';
+  });
+
+  muteBtn.addEventListener('click', () => {
+    const isMuted = bgVideo.muted;
+    bgVideo.muted = !isMuted;
+    localStorage.setItem('videoMuted', !isMuted);
+    updateVolumeIcon();
+  });
+
+  function updateVolumeIcon() {
+    if (bgVideo.muted) {
+      iconVolume.style.display = 'none';
+      iconVolumeMuted.style.display = 'block';
+      muteBtn.setAttribute('title', 'Unmute video');
+    } else {
+      iconVolume.style.display = 'block';
+      iconVolumeMuted.style.display = 'none';
+      muteBtn.setAttribute('title', 'Mute video');
+    }
+  }
+
+  // Load saved mute preference
+  const savedMuted = localStorage.getItem('videoMuted') === 'true';
+  bgVideo.muted = savedMuted;
+  updateVolumeIcon();
 
   // ── LAST UPDATED DATE ───────────────────────────────────
   // Change this string whenever you update your resume.md
