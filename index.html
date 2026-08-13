@@ -819,40 +819,160 @@
     moon.style.display = t === 'light' ? 'block' : 'none';
   }
 
-  // ── VIDEO CONTROL ──────────────────────────────────────
+  // ── VIDEO CONTROL / AUDIO DETECTION ─────────────────────
   const bgVideo = document.getElementById('bgVideo');
   const muteBtn = document.getElementById('videoMuteBtn');
   const iconVolume = document.getElementById('iconVolume');
   const iconVolumeMuted = document.getElementById('iconVolumeMuted');
 
-  // Check if video exists and try to load it
-  bgVideo.addEventListener('error', () => {
-    bgVideo.style.display = 'none';
-  });
+  // The mute button should ONLY exist when the MP4 actually has audio.
+  // Images and silent MP4 files do not need an audio control.
 
-  muteBtn.addEventListener('click', () => {
-    const isMuted = bgVideo.muted;
-    bgVideo.muted = !isMuted;
-    localStorage.setItem('videoMuted', !isMuted);
-    updateVolumeIcon();
-  });
+  function readBoxType(view, offset) {
+    if (offset + 4 > view.byteLength) return '';
+    return String.fromCharCode(
+      view.getUint8(offset),
+      view.getUint8(offset + 1),
+      view.getUint8(offset + 2),
+      view.getUint8(offset + 3)
+    );
+  }
+
+  function mp4HasAudioTrack(buffer) {
+    const view = new DataView(buffer);
+
+    function scan(start, end, insideTrack = false) {
+      let offset = start;
+
+      while (offset + 8 <= end) {
+        let size = view.getUint32(offset);
+        const type = readBoxType(view, offset + 4);
+        let headerSize = 8;
+
+        // 64-bit extended box size.
+        if (size === 1) {
+          if (offset + 16 > end) break;
+          const high = view.getUint32(offset + 8);
+          const low = view.getUint32(offset + 12);
+          size = high * 4294967296 + low;
+          headerSize = 16;
+        }
+
+        // A size of zero means the box extends to the end.
+        if (size === 0) size = end - offset;
+
+        if (!Number.isFinite(size) || size < headerSize || offset + size > end) {
+          break;
+        }
+
+        const boxStart = offset + headerSize;
+        const boxEnd = offset + size;
+
+        // hdlr boxes identify the type of media in a track.
+        // "soun" = audio, "vide" = video.
+        if (type === 'hdlr' && insideTrack && boxStart + 12 <= boxEnd) {
+          const handlerType = readBoxType(view, boxStart + 8);
+          if (handlerType === 'soun') return true;
+        }
+
+        const containers = new Set([
+          'moov', 'trak', 'mdia', 'minf', 'stbl', 'edts', 'dinf'
+        ]);
+
+        if (containers.has(type)) {
+          if (scan(boxStart, boxEnd, insideTrack || type === 'trak')) {
+            return true;
+          }
+        }
+
+        offset += size;
+      }
+
+      return false;
+    }
+
+    return scan(0, view.byteLength);
+  }
+
+  async function configureVideoAudio() {
+    // If the elements aren't present, do nothing.
+    if (!bgVideo || !muteBtn) return;
+
+    // Start with the control hidden until we know audio exists.
+    muteBtn.style.display = 'none';
+
+    // Get the actual source URL from the <source> element.
+    const source = bgVideo.querySelector('source')?.src || bgVideo.currentSrc || '';
+
+    // This page's background is currently an MP4.
+    // If you later replace it with an image, the control stays hidden.
+    if (!/\.mp4(?:[?#].*)?$/i.test(source)) {
+      bgVideo.muted = true;
+      return;
+    }
+
+    try {
+      const response = await fetch(source);
+
+      if (!response.ok) {
+        bgVideo.muted = true;
+        return;
+      }
+
+      const buffer = await response.arrayBuffer();
+      const hasAudio = mp4HasAudioTrack(buffer);
+
+      // Silent MP4: keep muted and leave the button hidden.
+      if (!hasAudio) {
+        bgVideo.muted = true;
+        return;
+      }
+
+      // MP4 with audio: now expose the mute control.
+      muteBtn.style.display = 'flex';
+
+      const savedMuted = localStorage.getItem('videoMuted');
+      bgVideo.muted = savedMuted === null ? true : savedMuted === 'true';
+
+      updateVolumeIcon();
+
+      muteBtn.addEventListener('click', () => {
+        bgVideo.muted = !bgVideo.muted;
+        localStorage.setItem('videoMuted', String(bgVideo.muted));
+        updateVolumeIcon();
+      });
+    } catch (error) {
+      // If the file cannot be inspected, fail safely:
+      // no audio control is shown.
+      console.warn('Could not inspect background video audio track:', error);
+      bgVideo.muted = true;
+      muteBtn.style.display = 'none';
+    }
+  }
 
   function updateVolumeIcon() {
+    if (!bgVideo || !muteBtn) return;
+
     if (bgVideo.muted) {
       iconVolume.style.display = 'none';
       iconVolumeMuted.style.display = 'block';
       muteBtn.setAttribute('title', 'Unmute video');
+      muteBtn.setAttribute('aria-label', 'Unmute video');
     } else {
       iconVolume.style.display = 'block';
       iconVolumeMuted.style.display = 'none';
       muteBtn.setAttribute('title', 'Mute video');
+      muteBtn.setAttribute('aria-label', 'Mute video');
     }
   }
 
-  // Load saved mute preference
-  const savedMuted = localStorage.getItem('videoMuted') === 'true';
-  bgVideo.muted = savedMuted;
-  updateVolumeIcon();
+  // Hide the video if the background file itself fails to load.
+  bgVideo?.addEventListener('error', () => {
+    bgVideo.style.display = 'none';
+    muteBtn.style.display = 'none';
+  });
+
+  configureVideoAudio();
 
   // ── SCROLL REVEAL ──────────────────────────────────────
   const observer = new IntersectionObserver((entries) => {
