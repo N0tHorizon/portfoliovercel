@@ -39,8 +39,8 @@
       "company": "Brilliant",
       "role": "QA",
       "dateRange": "January 2026 – Present",
-      "icon": "B",
-      "isImage": false
+      "icon": "brilliant.png",
+      "isImage": true
     },
     {
       "company": "Win11Debloat",
