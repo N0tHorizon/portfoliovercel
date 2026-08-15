@@ -55,6 +55,15 @@
       object-fit: cover;
       z-index: -1;
     }
+    .bg-image {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       background-image: url('background.png');
@@ -664,13 +673,11 @@
 </head>
 <body>
 
-<!-- ── VIDEO BACKGROUND ───────────────────────────────── -->
-<video id="bgVideo" class="bg-video" autoplay muted loop playsinline>
-  <source src="background.mp4" type="video/mp4">
-</video>
+<!-- ── BACKGROUND MEDIA ───────────────────────────────────── -->
+<div id="backgroundMedia"></div>
 
-<!-- ── VIDEO CONTROL ─────────────────────────────────── -->
-<button id="videoMuteBtn" class="video-control-btn" title="Unmute video" aria-label="Toggle video audio">
+<!-- ── VIDEO/AUDIO CONTROL ───────────────────────────────── -->
+<button id="videoMuteBtn" class="video-control-btn" title="Unmute video" aria-label="Toggle background audio" style="display:none;">
   <svg id="iconVolume" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
     <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
     <path d="M15.54 8.46a7 7 0 0 1 0 9.9M19.07 4.93a10 10 0 0 1 0 14.14"></path>
@@ -797,7 +804,221 @@
 
 <script src="config.js"></script>
 <script>
-  // ── THEME ──────────────────────────────────────────────
+  // ================================================================
+  // BACKGROUND MEDIA PRIORITY
+  // ================================================================
+  //
+  // The page always checks these files in this exact order:
+  //
+  //   1. background.mp3
+  //   2. background.png
+  //   3. background.mp4
+  //
+  // There is NO file-type detection logic. The priority is fixed.
+  //
+  // If background.mp3 exists and can load, it becomes the background
+  // audio. The PNG is still loaded if it exists.
+  //
+  // If background.mp3 cannot load, the page continues to background.png.
+  // If neither MP3 nor PNG can load, it falls back to background.mp4.
+  //
+  // MP4 always gets the mute button. No audio-track inspection occurs.
+  // ================================================================
+
+  const backgroundMedia = document.getElementById('backgroundMedia');
+  const muteBtn = document.getElementById('videoMuteBtn');
+  const iconVolume = document.getElementById('iconVolume');
+  const iconVolumeMuted = document.getElementById('iconVolumeMuted');
+
+  const BACKGROUND_MP3 = 'background.mp3';
+  const BACKGROUND_PNG = 'background.png';
+  const BACKGROUND_MP4 = 'background.mp4';
+
+  let backgroundAudio = null;
+  let backgroundVideo = null;
+
+  // ------------------------------------------------
+  // Try MP3 first
+  // ------------------------------------------------
+  // The MP3 is tested without blocking the PNG/video from being used.
+  // ------------------------------------------------
+
+  function tryBackgroundAudio() {
+    return new Promise((resolve) => {
+      const audio = new Audio();
+      let finished = false;
+
+      function finish(success) {
+        if (finished) return;
+        finished = true;
+        audio.removeEventListener('canplaythrough', onReady);
+        audio.removeEventListener('error', onError);
+        audio.removeEventListener('abort', onError);
+        resolve(success ? audio : null);
+      }
+
+      function onReady() {
+        finish(true);
+      }
+
+      function onError() {
+        finish(false);
+      }
+
+      audio.preload = 'auto';
+      audio.loop = true;
+      audio.src = BACKGROUND_MP3;
+      audio.addEventListener('canplaythrough', onReady);
+      audio.addEventListener('error', onError);
+      audio.addEventListener('abort', onError);
+
+      // Do not wait forever if the file doesn't exist.
+      setTimeout(() => finish(false), 3000);
+      audio.load();
+    });
+  }
+
+  // ------------------------------------------------
+  // Load PNG
+  // ------------------------------------------------
+
+  function tryBackgroundPng() {
+    return new Promise((resolve) => {
+      const image = new Image();
+
+      image.onload = () => {
+        image.className = 'bg-image';
+        image.alt = '';
+        image.setAttribute('aria-hidden', 'true');
+        backgroundMedia.appendChild(image);
+        resolve(true);
+      };
+
+      image.onerror = () => resolve(false);
+      image.src = BACKGROUND_PNG;
+    });
+  }
+
+  // ------------------------------------------------
+  // Load MP4
+  // ------------------------------------------------
+
+  function tryBackgroundMp4() {
+    return new Promise((resolve) => {
+      const video = document.createElement('video');
+      const source = document.createElement('source');
+
+      video.id = 'bgVideo';
+      video.className = 'bg-video';
+      video.autoplay = true;
+      video.muted = true;
+      video.loop = true;
+      video.playsInline = true;
+      video.preload = 'auto';
+
+      source.src = BACKGROUND_MP4;
+      source.type = 'video/mp4';
+      video.appendChild(source);
+      backgroundMedia.appendChild(video);
+
+      backgroundVideo = video;
+
+      video.addEventListener('loadeddata', () => {
+        video.play().catch(() => {});
+        resolve(true);
+      }, { once: true });
+
+      video.addEventListener('error', () => {
+        video.remove();
+        backgroundVideo = null;
+        resolve(false);
+      }, { once: true });
+
+      video.load();
+    });
+  }
+
+  // ------------------------------------------------
+  // Background initialization
+  // ------------------------------------------------
+
+  async function initializeBackground() {
+    // Priority 1: MP3
+    backgroundAudio = await tryBackgroundAudio();
+
+    if (backgroundAudio) {
+      backgroundAudio.play().catch(() => {});
+    }
+
+    // Priority 2: PNG
+    const pngLoaded = await tryBackgroundPng();
+
+    if (pngLoaded) {
+      // PNG is the visual background.
+      // MP3, if available, remains independent of it.
+      muteBtn.style.display = 'none';
+      return;
+    }
+
+    // Priority 3: MP4
+    const mp4Loaded = await tryBackgroundMp4();
+
+    if (mp4Loaded) {
+      // MP4 always gets the mute button.
+      muteBtn.style.display = 'flex';
+      loadSavedVideoMuteState();
+      return;
+    }
+
+    // Nothing loaded.
+    muteBtn.style.display = 'none';
+  }
+
+  // ------------------------------------------------
+  // MP4 mute control
+  // ------------------------------------------------
+
+  function updateVolumeIcon() {
+    if (!backgroundVideo) return;
+
+    if (backgroundVideo.muted) {
+      iconVolume.style.display = 'none';
+      iconVolumeMuted.style.display = 'block';
+      muteBtn.setAttribute('title', 'Unmute video');
+      muteBtn.setAttribute('aria-label', 'Unmute video');
+    } else {
+      iconVolume.style.display = 'block';
+      iconVolumeMuted.style.display = 'none';
+      muteBtn.setAttribute('title', 'Mute video');
+      muteBtn.setAttribute('aria-label', 'Mute video');
+    }
+  }
+
+  function loadSavedVideoMuteState() {
+    if (!backgroundVideo) return;
+
+    const savedMuted = localStorage.getItem('videoMuted');
+
+    // Default to muted for browser autoplay compatibility.
+    backgroundVideo.muted = savedMuted === null ? true : savedMuted === 'true';
+    updateVolumeIcon();
+  }
+
+  muteBtn.addEventListener('click', () => {
+    if (!backgroundVideo) return;
+
+    backgroundVideo.muted = !backgroundVideo.muted;
+    localStorage.setItem('videoMuted', String(backgroundVideo.muted));
+    updateVolumeIcon();
+  });
+
+  initializeBackground();
+
+
+  // ================================================================
+  // THEME
+  // ================================================================
+
   const root   = document.documentElement;
   const toggle = document.getElementById('themeToggle');
   const sun    = document.getElementById('iconSun');
@@ -819,162 +1040,11 @@
     moon.style.display = t === 'light' ? 'block' : 'none';
   }
 
-  // ── VIDEO CONTROL / AUDIO DETECTION ─────────────────────
-  const bgVideo = document.getElementById('bgVideo');
-  const muteBtn = document.getElementById('videoMuteBtn');
-  const iconVolume = document.getElementById('iconVolume');
-  const iconVolumeMuted = document.getElementById('iconVolumeMuted');
 
-  // The mute button should ONLY exist when the MP4 actually has audio.
-  // Images and silent MP4 files do not need an audio control.
+  // ================================================================
+  // SCROLL REVEAL
+  // ================================================================
 
-  function readBoxType(view, offset) {
-    if (offset + 4 > view.byteLength) return '';
-    return String.fromCharCode(
-      view.getUint8(offset),
-      view.getUint8(offset + 1),
-      view.getUint8(offset + 2),
-      view.getUint8(offset + 3)
-    );
-  }
-
-  function mp4HasAudioTrack(buffer) {
-    const view = new DataView(buffer);
-
-    function scan(start, end, insideTrack = false) {
-      let offset = start;
-
-      while (offset + 8 <= end) {
-        let size = view.getUint32(offset);
-        const type = readBoxType(view, offset + 4);
-        let headerSize = 8;
-
-        // 64-bit extended box size.
-        if (size === 1) {
-          if (offset + 16 > end) break;
-          const high = view.getUint32(offset + 8);
-          const low = view.getUint32(offset + 12);
-          size = high * 4294967296 + low;
-          headerSize = 16;
-        }
-
-        // A size of zero means the box extends to the end.
-        if (size === 0) size = end - offset;
-
-        if (!Number.isFinite(size) || size < headerSize || offset + size > end) {
-          break;
-        }
-
-        const boxStart = offset + headerSize;
-        const boxEnd = offset + size;
-
-        // hdlr boxes identify the type of media in a track.
-        // "soun" = audio, "vide" = video.
-        if (type === 'hdlr' && insideTrack && boxStart + 12 <= boxEnd) {
-          const handlerType = readBoxType(view, boxStart + 8);
-          if (handlerType === 'soun') return true;
-        }
-
-        const containers = new Set([
-          'moov', 'trak', 'mdia', 'minf', 'stbl', 'edts', 'dinf'
-        ]);
-
-        if (containers.has(type)) {
-          if (scan(boxStart, boxEnd, insideTrack || type === 'trak')) {
-            return true;
-          }
-        }
-
-        offset += size;
-      }
-
-      return false;
-    }
-
-    return scan(0, view.byteLength);
-  }
-
-  async function configureVideoAudio() {
-    // If the elements aren't present, do nothing.
-    if (!bgVideo || !muteBtn) return;
-
-    // Start with the control hidden until we know audio exists.
-    muteBtn.style.display = 'none';
-
-    // Get the actual source URL from the <source> element.
-    const source = bgVideo.querySelector('source')?.src || bgVideo.currentSrc || '';
-
-    // This page's background is currently an MP4.
-    // If you later replace it with an image, the control stays hidden.
-    if (!/\.mp4(?:[?#].*)?$/i.test(source)) {
-      bgVideo.muted = true;
-      return;
-    }
-
-    try {
-      const response = await fetch(source);
-
-      if (!response.ok) {
-        bgVideo.muted = true;
-        return;
-      }
-
-      const buffer = await response.arrayBuffer();
-      const hasAudio = mp4HasAudioTrack(buffer);
-
-      // Silent MP4: keep muted and leave the button hidden.
-      if (!hasAudio) {
-        bgVideo.muted = true;
-        return;
-      }
-
-      // MP4 with audio: now expose the mute control.
-      muteBtn.style.display = 'flex';
-
-      const savedMuted = localStorage.getItem('videoMuted');
-      bgVideo.muted = savedMuted === null ? true : savedMuted === 'true';
-
-      updateVolumeIcon();
-
-      muteBtn.addEventListener('click', () => {
-        bgVideo.muted = !bgVideo.muted;
-        localStorage.setItem('videoMuted', String(bgVideo.muted));
-        updateVolumeIcon();
-      });
-    } catch (error) {
-      // If the file cannot be inspected, fail safely:
-      // no audio control is shown.
-      console.warn('Could not inspect background video audio track:', error);
-      bgVideo.muted = true;
-      muteBtn.style.display = 'none';
-    }
-  }
-
-  function updateVolumeIcon() {
-    if (!bgVideo || !muteBtn) return;
-
-    if (bgVideo.muted) {
-      iconVolume.style.display = 'none';
-      iconVolumeMuted.style.display = 'block';
-      muteBtn.setAttribute('title', 'Unmute video');
-      muteBtn.setAttribute('aria-label', 'Unmute video');
-    } else {
-      iconVolume.style.display = 'block';
-      iconVolumeMuted.style.display = 'none';
-      muteBtn.setAttribute('title', 'Mute video');
-      muteBtn.setAttribute('aria-label', 'Mute video');
-    }
-  }
-
-  // Hide the video if the background file itself fails to load.
-  bgVideo?.addEventListener('error', () => {
-    bgVideo.style.display = 'none';
-    muteBtn.style.display = 'none';
-  });
-
-  configureVideoAudio();
-
-  // ── SCROLL REVEAL ──────────────────────────────────────
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -987,7 +1057,11 @@
 
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-  // ── COUNTING ANIMATION ─────────────────────────────────
+
+  // ================================================================
+  // COUNTING ANIMATION
+  // ================================================================
+
   function startCount(el) {
     const target = parseInt(el.dataset.target, 10);
     const suffix = el.dataset.suffix || '';
@@ -1010,11 +1084,6 @@
     requestAnimationFrame(tick);
   }
 </script>
-
-  <script>
-    window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
-  </script>
-  <script defer src="/_vercel/speed-insights/script.js"></script>
 
 </body>
 </html>
