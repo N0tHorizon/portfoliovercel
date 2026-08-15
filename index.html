@@ -14,8 +14,8 @@
     --text: #f0f6fc;
     --text-muted: #8b949e;
     --text-dim: #4a5260;
-    --accent: #58a6ff;
-    --accent-dim: rgba(88, 166, 255, 0.35);
+    --accent: #d4af37;
+    --accent-dim: rgba(212, 175, 55, 0.35);
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -48,7 +48,7 @@
     inset: 0;
     z-index: 0;
     background:
-      radial-gradient(ellipse 70% 60% at 78% 45%, rgba(88,166,255,0.07), transparent 60%),
+      radial-gradient(ellipse 70% 60% at 78% 45%, rgba(212,175,55,0.08), transparent 60%),
       radial-gradient(ellipse 120% 100% at 10% 100%, var(--bg-2), transparent 55%);
   }
 
@@ -152,7 +152,7 @@
     background: var(--accent);
     color: #0a0d13;
   }
-  .btn.primary:hover { background: #7ab6ff; transform: translateY(-2px); }
+  .btn.primary:hover { background: #e6c765; transform: translateY(-2px); }
 
   .btn.ghost {
     background: rgba(255,255,255,0.04);
@@ -380,7 +380,7 @@
       ctx.beginPath();
       ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
       ctx.fillStyle = p.c === 'accent'
-        ? `rgba(88, 166, 255, ${twinkle})`
+        ? `rgba(212, 175, 55, ${twinkle})`
         : `rgba(240, 246, 252, ${twinkle * 0.8})`;
       ctx.fill();
     }
@@ -393,7 +393,7 @@
     for (const p of particles) {
       ctx.beginPath();
       ctx.arc(p.tx, p.ty, p.size, 0, Math.PI * 2);
-      ctx.fillStyle = p.c === 'accent' ? 'rgba(88,166,255,0.6)' : 'rgba(240,246,252,0.45)';
+      ctx.fillStyle = p.c === 'accent' ? 'rgba(212,175,55,0.6)' : 'rgba(240,246,252,0.45)';
       ctx.fill();
     }
   }
