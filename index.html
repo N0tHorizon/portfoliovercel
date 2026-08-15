@@ -165,6 +165,17 @@
     transform: translateY(-2px);
   }
 
+  .btn.secondary {
+    background: rgba(255,255,255,0.04);
+    color: var(--text);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .btn.secondary:hover {
+    background: rgba(255,255,255,0.08);
+    border-color: rgba(255,255,255,0.18);
+    transform: translateY(-2px);
+  }
+
   .btn svg { width: 15px; height: 15px; }
 
   footer {
@@ -231,7 +242,7 @@
       <a class="btn ghost" href="/legacy/legacy.html">
         See the legacy site
       </a>
-      <a class="btn ghost" href="upcoming.html"></a>
+      <a class="btn secondary" href="upcoming.html"></a>
         See what's coming
     </div>
   </div>
