@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Horizon — Something great is underway</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #0a0d13;
+    --bg-2: #0d1017;
+    --text: #f0f6fc;
+    --text-muted: #8b949e;
+    --text-dim: #4a5260;
+    --accent: #58a6ff;
+    --accent-dim: rgba(88, 166, 255, 0.35);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    height: 100%;
+    background: var(--bg);
+    overflow: hidden;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--text);
+    position: relative;
+  }
+
+  /* ── dot grid backdrop ─────────────────────────────── */
+  .grid {
+    position: fixed;
+    inset: 0;
+    background-image: radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px);
+    background-size: 28px 28px;
+    z-index: 0;
+    -webkit-mask-image: radial-gradient(ellipse 90% 80% at 50% 40%, black 20%, transparent 85%);
+            mask-image: radial-gradient(ellipse 90% 80% at 50% 40%, black 20%, transparent 85%);
+  }
+
+  .vignette {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background:
+      radial-gradient(ellipse 70% 60% at 78% 45%, rgba(88,166,255,0.07), transparent 60%),
+      radial-gradient(ellipse 120% 100% at 10% 100%, var(--bg-2), transparent 55%);
+  }
+
+  canvas#field {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    display: block;
+  }
+
+  /* ── content ───────────────────────────────────────── */
+  .wrap {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 8vw;
+  }
+
+  .content { max-width: 640px; }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fadeUp 0.7s ease 0.1s forwards;
+  }
+
+  .eyebrow .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 8px var(--accent);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  .eyebrow .sep { color: var(--text-dim); }
+
+  h1 {
+    font-size: clamp(2.6rem, 6vw, 4.4rem);
+    font-weight: 800;
+    letter-spacing: -0.035em;
+    line-height: 1.04;
+  }
+
+  h1 .line { display: block; overflow: hidden; }
+  h1 .line span {
+    display: block;
+    transform: translateY(110%);
+    animation: rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+  h1 .line:nth-child(1) span { animation-delay: 0.22s; }
+  h1 .line:nth-child(2) span {
+    animation-delay: 0.34s;
+    color: var(--text-muted);
+    font-weight: 700;
+  }
+
+  p.sub {
+    margin-top: 26px;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--text-muted);
+    max-width: 460px;
+    opacity: 0;
+    animation: fadeUp 0.7s ease 0.55s forwards;
+  }
+
+  .links {
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    opacity: 0;
+    animation: fadeUp 0.7s ease 0.7s forwards;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .btn.primary {
+    background: var(--accent);
+    color: #0a0d13;
+  }
+  .btn.primary:hover { background: #7ab6ff; transform: translateY(-2px); }
+
+  .btn.ghost {
+    background: rgba(255,255,255,0.04);
+    color: var(--text);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .btn.ghost:hover {
+    background: rgba(255,255,255,0.08);
+    border-color: rgba(255,255,255,0.18);
+    transform: translateY(-2px);
+  }
+
+  .btn svg { width: 15px; height: 15px; }
+
+  footer {
+    position: fixed;
+    bottom: 26px;
+    left: 8vw;
+    z-index: 2;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+    color: var(--text-dim);
+    opacity: 0;
+    animation: fadeUp 0.7s ease 0.85s forwards;
+  }
+
+  @keyframes rise {
+    to { transform: translateY(0); }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.35; }
+  }
+
+  @media (max-width: 760px) {
+    .wrap { padding: 0 7vw; align-items: flex-start; padding-top: 22vh; }
+    canvas#field { opacity: 0.55; }
+    footer { display: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .eyebrow, h1 .line span, p.sub, .links, footer { animation: none !important; opacity: 1 !important; transform: none !important; }
+    .eyebrow .dot { animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="grid"></div>
+<div class="vignette"></div>
+<canvas id="field"></canvas>
+
+<div class="wrap">
+  <div class="content">
+    <div class="eyebrow">
+      <span class="dot"></span>
+      HORIZON <span class="sep">·</span> STATUS: IN PROGRESS
+    </div>
+    <h1>
+      <span class="line"><span>Something great</span></span>
+      <span class="line"><span>is underway.</span></span>
+    </h1>
+    <p class="sub">
+      The portfolio's getting a rebuild — new pass, fewer bugs, better coverage.
+      Everything's still testing green in the meantime.
+    </p>
+    <div class="links">
+      <a class="btn primary" href="https://discord.com/users/1078466874301493368" target="_blank" rel="noopener">
+        <svg fill="currentColor" viewBox="0 0 24 24"><path d="M20.317 4.37a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.6 12.6 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.74 19.74 0 0 0 3.68 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.128 12.3 12.3 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
+        Message on Discord
+      </a>
+      <a class="btn ghost" href="https://github.com/N0tHorizon" target="_blank" rel="noopener">
+        <svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+        View GitHub
+      </a>
+    </div>
+  </div>
+</div>
+
+<footer>REBUILD IN PROGRESS &nbsp;/&nbsp; NO ETA &nbsp;/&nbsp; TESTS PASSING</footer>
+
+<script>
+(function () {
+  const canvas = document.getElementById('field');
+  const ctx = canvas.getContext('2d');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  let W, H, DPR;
+  let particles = [];
+  let mouse = { x: -9999, y: -9999, active: false };
+
+  function resize() {
+    DPR = Math.min(window.devicePixelRatio || 1, 2);
+    W = window.innerWidth;
+    H = window.innerHeight;
+    canvas.width = W * DPR;
+    canvas.height = H * DPR;
+    canvas.style.width = W + 'px';
+    canvas.style.height = H + 'px';
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    buildField();
+  }
+
+  // ── checkmark path, sampled into target points ──────
+  function checkmarkPoints(cx, cy, scale, count) {
+    const pts = [];
+    // two segments: short stroke + long stroke, normalized coords
+    const a = { x: -0.34, y: 0.02 };
+    const b = { x: -0.08, y: 0.30 };
+    const c = { x: 0.42, y: -0.36 };
+
+    const shortLen = Math.hypot(b.x - a.x, b.y - a.y);
+    const longLen = Math.hypot(c.x - b.x, c.y - b.y);
+    const total = shortLen + longLen;
+    const nShort = Math.round(count * (shortLen / total));
+    const nLong = count - nShort;
+
+    function sampleSeg(p1, p2, n) {
+      for (let i = 0; i < n; i++) {
+        const t = n === 1 ? 0.5 : i / (n - 1);
+        const jitter = 0.028;
+        const nx = -(p2.y - p1.y);
+        const ny = (p2.x - p1.x);
+        const nlen = Math.hypot(nx, ny) || 1;
+        const off = (Math.random() - 0.5) * 2 * jitter;
+        const x = p1.x + (p2.x - p1.x) * t + (nx / nlen) * off;
+        const y = p1.y + (p2.y - p1.y) * t + (ny / nlen) * off;
+        pts.push({
+          x: cx + x * scale,
+          y: cy + y * scale
+        });
+      }
+    }
+    sampleSeg(a, b, nShort);
+    sampleSeg(b, c, nLong);
+    return pts;
+  }
+
+  function buildField() {
+    particles = [];
+
+    // placement: right-of-center on wide screens, upper-mid on narrow
+    const narrow = W < 760;
+    const cx = narrow ? W * 0.5 : W * 0.755;
+    const cy = narrow ? H * 0.34 : H * 0.42;
+    const scale = Math.min(W, H) * (narrow ? 0.62 : 0.62);
+
+    const density = Math.min(1, (W * H) / (1400 * 900));
+    const coreCount = Math.round(420 * density);
+    const targets = checkmarkPoints(cx, cy, scale, coreCount);
+
+    targets.forEach((t, i) => {
+      particles.push({
+        x: t.x + (Math.random() - 0.5) * 60,
+        y: t.y + (Math.random() - 0.5) * 60,
+        tx: t.x,
+        ty: t.y,
+        size: Math.random() * 1.6 + 0.6,
+        c: Math.random() < 0.72 ? 'accent' : 'white',
+        drift: Math.random() * Math.PI * 2,
+        driftSpeed: 0.15 + Math.random() * 0.25,
+        vx: 0,
+        vy: 0
+      });
+    });
+
+    // ambient dust, loosely scattered, no target (free-floating)
+    const dustCount = Math.round(90 * density);
+    for (let i = 0; i < dustCount; i++) {
+      const x = cx + (Math.random() - 0.5) * scale * 2.1;
+      const y = cy + (Math.random() - 0.5) * scale * 2.1;
+      particles.push({
+        x, y, tx: x, ty: y,
+        size: Math.random() * 1.1 + 0.4,
+        c: Math.random() < 0.5 ? 'accent' : 'white',
+        drift: Math.random() * Math.PI * 2,
+        driftSpeed: 0.05 + Math.random() * 0.1,
+        vx: 0, vy: 0,
+        ambient: true,
+        alpha: 0.15 + Math.random() * 0.25
+      });
+    }
+  }
+
+  let t = 0;
+
+  function draw() {
+    t += 0.016;
+    ctx.clearRect(0, 0, W, H);
+
+    for (const p of particles) {
+      // gentle organic drift around target
+      const dx0 = Math.cos(t * p.driftSpeed + p.drift) * (p.ambient ? 10 : 2.2);
+      const dy0 = Math.sin(t * p.driftSpeed * 0.8 + p.drift) * (p.ambient ? 10 : 2.2);
+      const targetX = p.tx + dx0;
+      const targetY = p.ty + dy0;
+
+      // mouse repulsion
+      let fx = (targetX - p.x) * 0.06;
+      let fy = (targetY - p.y) * 0.06;
+
+      if (mouse.active) {
+        const mdx = p.x - mouse.x;
+        const mdy = p.y - mouse.y;
+        const dist = Math.hypot(mdx, mdy);
+        const radius = 120;
+        if (dist < radius) {
+          const force = (1 - dist / radius) * 2.6;
+          fx += (mdx / (dist || 1)) * force;
+          fy += (mdy / (dist || 1)) * force;
+        }
+      }
+
+      p.vx = (p.vx + fx) * 0.82;
+      p.vy = (p.vy + fy) * 0.82;
+      p.x += p.vx;
+      p.y += p.vy;
+
+      const twinkle = p.ambient ? p.alpha : (0.55 + Math.sin(t * 1.4 + p.drift) * 0.25);
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.fillStyle = p.c === 'accent'
+        ? `rgba(88, 166, 255, ${twinkle})`
+        : `rgba(240, 246, 252, ${twinkle * 0.8})`;
+      ctx.fill();
+    }
+
+    requestAnimationFrame(draw);
+  }
+
+  function drawStatic() {
+    ctx.clearRect(0, 0, W, H);
+    for (const p of particles) {
+      ctx.beginPath();
+      ctx.arc(p.tx, p.ty, p.size, 0, Math.PI * 2);
+      ctx.fillStyle = p.c === 'accent' ? 'rgba(88,166,255,0.6)' : 'rgba(240,246,252,0.45)';
+      ctx.fill();
+    }
+  }
+
+  window.addEventListener('resize', resize);
+  window.addEventListener('mousemove', (e) => {
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+    mouse.active = true;
+  });
+  window.addEventListener('mouseleave', () => { mouse.active = false; });
+
+  resize();
+  if (reducedMotion) {
+    drawStatic();
+  } else {
+    requestAnimationFrame(draw);
+  }
+})();
+</script>
+
+</body>
+</html>
