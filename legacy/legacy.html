@@ -700,7 +700,7 @@
       </svg>
       Portfolio
     </a>
-    <a href="resume.html" class="tab-link">
+    <a href="legacy/resume.html" class="tab-link">
       <svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
         <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
         <polyline points="14 2 14 8 20 8"/>
@@ -715,43 +715,99 @@
   <!-- ── HERO ───────────────────────────────────────────── -->
   <div class="hero">
     <div class="hero-text">
-      <h1></h1>
-      <p></p>
+      <h1>Horizon</h1>
+      <p>Senior web Quality Assurance Engineer and a Junior software Quality Assurance Engineer</p>
       <div id="statusContainer"></div>
     </div>
-    <div class="avatar">
-      <img src="pfp.png" alt="Profile" />
-    </div>
+    <div class="avatar" aria-label="Profile placeholder">H</div>
   </div>
 
   <!-- ── ABOUT ──────────────────────────────────────────── -->
   <section id="about" class="reveal glass-tile">
     <h2>About</h2>
-    <p class="about-text"></p>
+    <p class="about-text">I've been in web Quality Assurance for almost 3 years, and I have recently learned software Quality Assurance. Most of my work has been for discord bot websites, but also some open source projects.</p>
   </section>
 
   <!-- ── STATS ──────────────────────────────────────────── -->
   <section id="stats" class="reveal glass-tile">
     <h2>By the Numbers</h2>
-    <div class="stats-grid"></div>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <span class="stat-value">160<span class="suffix">+</span></span>
+        <span class="stat-label">Bugs reported</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-value">4</span>
+        <span class="stat-label">Companies worked with — <span style="color:var(--accent)">2 public</span></span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-value">200<span class="suffix">+ hrs</span></span>
+        <span class="stat-label">Testing Time</span>
+      </div>
+    </div>
   </section>
 
   <!-- ── WORK EXPERIENCE ────────────────────────────────── -->
   <section id="work" class="reveal glass-tile">
     <h2>Work Experience</h2>
-    <div class="entry-list"></div>
+    <div class="entry-list">
+      <div class="entry">
+        <div class="entry-icon" aria-hidden="true">C</div>
+        <div class="entry-body">
+          <strong>Central</strong>
+          <span class="role">Lead QA</span>
+        </div>
+        <div class="entry-date">July 2025 – Present</div>
+      </div>
+      <div class="entry">
+        <div class="entry-icon" aria-hidden="true">B</div>
+        <div class="entry-body">
+          <strong>Brilliant</strong>
+          <span class="role">QA</span>
+        </div>
+        <div class="entry-date">January 2026 – Present</div>
+      </div>
+      <div class="entry">
+        <div class="entry-icon" aria-hidden="true">W</div>
+        <div class="entry-body">
+          <strong>Win11Debloat</strong>
+          <span class="role">Voluntary QA Contributor — Open Source</span>
+        </div>
+        <div class="entry-date">Contributor</div>
+      </div>
+    </div>
   </section>
 
   <!-- ── PROJECTS ───────────────────────────────────────── -->
   <section id="projects" class="reveal glass-tile">
     <h2>Projects</h2>
-    <div class="entry-list"></div>
+    <div class="entry-list">
+      <div class="entry project">
+        <div class="entry-icon" aria-hidden="true">⛉</div>
+        <div class="entry-body">
+          <strong>Windows Telemetry Blocker</strong>
+          <span class="proj-desc"><a href="https://github.com/N0tHorizon/WindowsTelemetryBlocker" target="_blank" rel="noopener">GitHub Project</a></span>
+          <span class="proj-stack">Powershell • Batchfile</span>
+        </div>
+        <div class="entry-date">Sep 2025 – Present</div>
+      </div>
+    </div>
   </section>
 
   <!-- ── SKILLS ─────────────────────────────────────────── */
   <section id="skills" class="reveal glass-tile">
     <h2>Skills</h2>
-    <div class="skill-list"></div>
+    <div class="skill-list">
+      <span class="skill-pill"><span class="pill-icon">💎</span>Ruby</span>
+      <span class="skill-pill"><span class="pill-icon">🌐</span>HTML</span>
+      <span class="skill-pill"><span class="pill-icon">✖</span>Cypress</span>
+      <span class="skill-pill"><span class="pill-icon">🪣</span>Powershell</span>
+      <span class="skill-pill"><span class="pill-icon">☁️</span>Cloudflare</span>
+      <span class="skill-pill"><span class="pill-icon">🟢</span>Node.js</span>
+      <span class="skill-pill"><span class="pill-icon">▲</span>Next.js</span>
+      <span class="skill-pill"><span class="pill-icon">💻</span>Selenium IDE</span>
+      <span class="skill-pill"><span class="pill-icon">🐧</span>Linux</span>
+    </div>
   </section>
 
   <!-- ── CONTACT ─────────────────────────────────────────── -->
@@ -814,7 +870,7 @@ const iconVolume = document.getElementById('iconVolume');
 const iconVolumeMuted = document.getElementById('iconVolumeMuted');
 
 const BACKGROUND_PNG = 'background.png';
-const BACKGROUND_MP4 = 'background.mp4';
+const BACKGROUND_MP4 = 'resources/background.mp4';
 
 let backgroundVideo = null;
 
@@ -959,7 +1015,6 @@ async function initializeBackground() {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('visible');
-        entry.target.querySelectorAll('.count').forEach(startCount);
         observer.unobserve(entry.target);
       }
     });
@@ -968,31 +1023,6 @@ async function initializeBackground() {
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
 
-  // ================================================================
-  // COUNTING ANIMATION
-  // ================================================================
-
-  function startCount(el) {
-    const target = parseInt(el.dataset.target, 10);
-    const suffix = el.dataset.suffix || '';
-    const duration = 1200;
-    const startTime = performance.now();
-
-    function easeOut(t) { return 1 - (1 - t) * (1 - t); }
-
-    function tick(now) {
-      const elapsed = now - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      const value = Math.round(easeOut(progress) * target);
-      el.textContent = value;
-      if (suffix) {
-        el.innerHTML = value + '<span class="suffix">' + suffix + '</span>';
-      }
-      if (progress < 1) requestAnimationFrame(tick);
-    }
-
-    requestAnimationFrame(tick);
-  }
 </script>
 
 </body>
