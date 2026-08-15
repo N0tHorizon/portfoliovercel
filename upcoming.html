@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Horizon — In Development</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  /* ── PALETTE ─────────────────────────────────────────── */
+  :root {
+    --main-color:   #a1a5a8;
+    --accent:       #d4af37;
+    --accent-light: #e6c765;
+    --accent-dark:  #9c7c20;
+    --red:          #bf4040;
+    --brown:        #bf8040;
+    --green:        #40bf40;
+    --blue:         #4080bf;
+    --purple:       #8040bf;
+    --dark-grey:    #737d8c;
+
+    --text:         #0f172a;
+    --text-muted:   #4b5563;
+    --text-dim:     #6b7280;
+
+    --glass:        rgba(255, 255, 255, 0.55);
+    --glass-border: rgba(255, 255, 255, 0.35);
+    --nav-bg:       rgba(255, 255, 255, 0.7);
+    --nav-border:   rgba(255, 255, 255, 0.4);
+  }
+
+  [data-theme="dark"] {
+    --main-color:   #0a0d13;
+    --accent:       #d4af37;
+    --accent-light: #e6c765;
+    --accent-dark:  #9c7c20;
+    --red:          #e61919;
+    --brown:        #e67319;
+    --green:        #19e619;
+    --blue:         #1973e6;
+    --purple:       #7319e6;
+    --dark-grey:    #273545;
+
+    --text:         #f0f6fc;
+    --text-muted:   #8b949e;
+    --text-dim:     #565f6b;
+
+    --glass:        rgba(20, 20, 30, 0.5);
+    --glass-border: rgba(255, 255, 255, 0.12);
+    --nav-bg:       rgba(20, 20, 30, 0.6);
+    --nav-border:   rgba(255, 255, 255, 0.15);
+  }
+
+  /* ── RESET ───────────────────────────────────────────── */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  html, body { height: 100%; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--main-color);
+    color: var(--text);
+    line-height: 1.6;
+    transition: background 0.2s ease, color 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  /* ── ARCHIVE / STATUS BANNER ─────────────────────────── */
+  .archive-banner {
+    width: 100%;
+    padding: 12px 20px;
+    background: #b91c1c;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-align: center;
+    border-bottom: 2px solid #7f1d1d;
+    box-shadow: 0 2px 10px rgba(185, 28, 28, 0.25);
+  }
+  .archive-icon {
+    font-size: 1.15rem;
+    line-height: 1;
+  }
+  @media (max-width: 520px) {
+    .archive-banner {
+      font-size: 0.8rem;
+      padding: 11px 14px;
+    }
+    .archive-icon {
+      font-size: 1rem;
+    }
+  }
+
+  /* ── BACKGROUND MEDIA ────────────────────────────────── */
+  .bg-video, .bg-image {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+  }
+
+  /* ── VIDEO CONTROL BUTTON ────────────────────────────── */
+  .video-control-btn {
+    position: fixed;
+    top: 28px;
+    left: 28px;
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    border: 1px solid var(--nav-border);
+    background: var(--nav-bg);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    transition: all 0.2s ease;
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    z-index: 99;
+  }
+  .video-control-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: var(--text);
+    transform: scale(1.1);
+  }
+  [data-theme="dark"] .video-control-btn:hover {
+    background: rgba(255, 255, 255, 0.12);
+  }
+  .video-control-btn:active { transform: scale(0.95); }
+  .video-control-btn svg { width: 24px; height: 24px; }
+
+  /* ── THEME TOGGLE ────────────────────────────────────── */
+  .theme-toggle {
+    position: fixed;
+    top: 28px;
+    right: 28px;
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    border: 1px solid var(--nav-border);
+    background: var(--nav-bg);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    transition: all 0.2s ease;
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    z-index: 99;
+  }
+  .theme-toggle:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: var(--text);
+    transform: scale(1.1);
+  }
+  [data-theme="dark"] .theme-toggle:hover {
+    background: rgba(255, 255, 255, 0.12);
+  }
+  .theme-toggle svg { width: 22px; height: 22px; }
+
+  /* ── LAYOUT / VIEW ROOT ──────────────────────────────── */
+  .page-wrap {
+    flex: 1;
+    display: flex;
+  }
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 100px 24px 140px;
+    width: 100%;
+  }
+
+  /* placeholder card so the base layout isn't a blank void
+     while the router/grid/content get built out */
+  .placeholder {
+    background: var(--glass);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid var(--glass-border);
+    border-radius: 28px;
+    padding: 48px;
+    text-align: center;
+  }
+  .placeholder h1 {
+    font-size: clamp(1.6rem, 4vw, 2.2rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 10px;
+  }
+  .placeholder p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; animation: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── STATUS BANNER ────────────────────────────────────── -->
+<div class="archive-banner">
+  <span class="archive-icon">⚠</span>
+  <span>This page is not complete</span>
+</div>
+
+<!-- ── BACKGROUND MEDIA ─────────────────────────────────── -->
+<div id="backgroundMedia"></div>
+
+<button id="videoMuteBtn" class="video-control-btn" title="Unmute video" aria-label="Toggle background audio" style="display:none;">
+  <svg id="iconVolume" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+    <path d="M15.54 8.46a7 7 0 0 1 0 9.9M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+  </svg>
+  <svg id="iconVolumeMuted" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" style="display:none">
+    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+    <line x1="23" y1="9" x2="17" y2="15"></line>
+    <line x1="17" y1="9" x2="23" y2="15"></line>
+  </svg>
+</button>
+
+<!-- ── THEME TOGGLE ─────────────────────────────────────── -->
+<button id="themeToggle" class="theme-toggle" title="Toggle theme" aria-label="Toggle dark mode">
+  <svg id="iconSun" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" style="display:none">
+    <circle cx="12" cy="12" r="5"/>
+    <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+    <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+  </svg>
+  <svg id="iconMoon" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+  </svg>
+</button>
+
+<!-- ── VIEW ROOT ─────────────────────────────────────────── -->
+<div class="page-wrap">
+  <div class="container">
+    <main id="view">
+      <div class="placeholder">
+        <h1>SPA shell is up</h1>
+        <p>Router, bento grid, and command palette land here next.</p>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script>
+  // ================================================================
+  // BACKGROUND MEDIA
+  // ================================================================
+  const backgroundMedia = document.getElementById('backgroundMedia');
+  const muteBtn = document.getElementById('videoMuteBtn');
+  const iconVolume = document.getElementById('iconVolume');
+  const iconVolumeMuted = document.getElementById('iconVolumeMuted');
+
+  const BACKGROUND_PNG = '/resources/background.png';
+  const BACKGROUND_MP4 = '/resources/background.mp4';
+
+  let backgroundVideo = null;
+
+  function tryBackgroundPng() {
+    return new Promise((resolve) => {
+      const image = new Image();
+      image.onload = () => {
+        image.className = 'bg-image';
+        image.alt = '';
+        image.setAttribute('aria-hidden', 'true');
+        resolve(image);
+      };
+      image.onerror = () => resolve(null);
+      image.src = BACKGROUND_PNG;
+    });
+  }
+
+  function tryBackgroundMp4() {
+    return new Promise((resolve) => {
+      const video = document.createElement('video');
+      const source = document.createElement('source');
+
+      video.id = 'bgVideo';
+      video.className = 'bg-video';
+      video.muted = true;
+      video.autoplay = true;
+      video.loop = true;
+      video.playsInline = true;
+      video.preload = 'auto';
+
+      video.addEventListener('loadeddata', () => resolve(video), { once: true });
+      video.addEventListener('error', () => resolve(null), { once: true });
+
+      source.src = BACKGROUND_MP4;
+      source.type = 'video/mp4';
+      video.appendChild(source);
+      video.load();
+    });
+  }
+
+  async function initializeBackground() {
+    const pngPromise = tryBackgroundPng();
+    const mp4Promise = tryBackgroundMp4();
+
+    const image = await pngPromise;
+    if (image) {
+      backgroundMedia.appendChild(image);
+      muteBtn.style.display = 'none';
+      return;
+    }
+
+    const video = await mp4Promise;
+    if (video) {
+      backgroundVideo = video;
+      backgroundMedia.appendChild(video);
+      video.play().catch(() => {});
+      muteBtn.style.display = 'flex';
+      loadSavedVideoMuteState();
+      return;
+    }
+
+    muteBtn.style.display = 'none';
+  }
+
+  function updateVolumeIcon() {
+    if (!backgroundVideo) return;
+    if (backgroundVideo.muted) {
+      iconVolume.style.display = 'none';
+      iconVolumeMuted.style.display = 'block';
+      muteBtn.setAttribute('title', 'Unmute video');
+      muteBtn.setAttribute('aria-label', 'Unmute video');
+    } else {
+      iconVolume.style.display = 'block';
+      iconVolumeMuted.style.display = 'none';
+      muteBtn.setAttribute('title', 'Mute video');
+      muteBtn.setAttribute('aria-label', 'Mute video');
+    }
+  }
+
+  function loadSavedVideoMuteState() {
+    if (!backgroundVideo) return;
+    backgroundVideo.muted = true;
+    updateVolumeIcon();
+  }
+
+  muteBtn.addEventListener('click', () => {
+    if (!backgroundVideo) return;
+    backgroundVideo.muted = !backgroundVideo.muted;
+    localStorage.setItem('videoMuted', String(backgroundVideo.muted));
+    updateVolumeIcon();
+  });
+
+  initializeBackground();
+
+  // ================================================================
+  // THEME
+  // ================================================================
+  const root   = document.documentElement;
+  const toggle = document.getElementById('themeToggle');
+  const sun    = document.getElementById('iconSun');
+  const moon   = document.getElementById('iconMoon');
+
+  const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const saved = localStorage.getItem('theme') || (systemDark ? 'dark' : 'light');
+  applyTheme(saved);
+
+  toggle.addEventListener('click', () => {
+    const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    applyTheme(next);
+    localStorage.setItem('theme', next);
+  });
+
+  function applyTheme(t) {
+    root.dataset.theme = t;
+    sun.style.display  = t === 'dark'  ? 'block' : 'none';
+    moon.style.display = t === 'light' ? 'block' : 'none';
+  }
+</script>
+
+</body>
+</html>
