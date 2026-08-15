@@ -608,8 +608,8 @@
       position: fixed;
       top: 28px;
       left: 28px;
-      width: 44px;
-      height: 44px;
+      width: 54px;
+      height: 54px;
       border-radius: 50%;
       border: 1px solid var(--nav-border);
       background: var(--nav-bg);
@@ -644,8 +644,8 @@
     }
 
     .video-control-btn svg {
-      width: 20px;
-      height: 20px;
+      width: 24px;
+      height: 24px;
     }
 
     /* ── RESPONSIVE ─────────────────────────────────────── */
@@ -909,13 +909,10 @@ async function initializeBackground() {
   }
 
   function loadSavedVideoMuteState() {
-    if (!backgroundVideo) return;
-
-    const savedMuted = localStorage.getItem('videoMuted');
-
-    // Default to muted for browser autoplay compatibility.
-    backgroundVideo.muted = savedMuted === null ? true : savedMuted === 'true';
-    updateVolumeIcon();
+  if (!backgroundVideo) return;
+  backgroundVideo.muted = true;
+  updateVolumeIcon();
+}
   }
 
   muteBtn.addEventListener('click', () => {
