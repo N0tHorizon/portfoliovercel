@@ -279,12 +279,15 @@ body {
   margin: 0 auto;
   padding: 120px 24px 160px;
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
 }
 @media (min-width: 761px) {
   .container { padding-left: 100px; }
+}
+
+#view {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
 .reveal {
@@ -602,6 +605,15 @@ body {
 </nav>
 
 <nav class="sidebar" aria-label="Quick actions">
+
+  <a href="index.html" class="sidebar-btn" title="Home">
+    <svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+      <path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/>
+      <polyline points="9 22 9 12 15 12 15 22"/>
+    </svg>
+  </a>
+
+  <div class="sidebar-divider"></div>
 
   <a href="https://discord.com/users/1078466874301493368" target="_blank" rel="noopener" class="sidebar-btn" title="Discord">
     <svg fill="currentColor" stroke="none" viewBox="0 0 24 24">
