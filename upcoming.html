@@ -9,12 +9,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 <style>
 
-/* ================================================================
-   MODULE: Palette
-   Purpose:   CSS custom properties for the whole site, light/dark.
-   Depends:   nothing — this must load before every other module.
-   Remove:    do not remove. Every other module reads these vars.
-   ================================================================ */
 :root {
   --main-color:   #a1a5a8;
   --accent:       #d4af37;
@@ -59,13 +53,6 @@
   --nav-border:   rgba(255, 255, 255, 0.15);
 }
 
-
-/* ================================================================
-   MODULE: Reset & Base
-   Purpose:   box model reset, base body styles.
-   Depends:   Palette module (--main-color, --text).
-   Remove:    do not remove. Everything sits on top of this.
-   ================================================================ */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 html, body { height: 100%; }
@@ -81,14 +68,6 @@ body {
   min-height: 100vh;
 }
 
-
-/* ================================================================
-   MODULE: Archive Banner
-   Purpose:   dismissible "page not complete" warning strip.
-   Depends:   Palette module. JS module "Archive Banner" below.
-   Remove:    yes — delete this block, the matching HTML block,
-              and the matching JS block. Nothing else references it.
-   ================================================================ */
 .archive-banner {
   position: relative;
   width: 100%;
@@ -160,24 +139,6 @@ body {
   }
 }
 
-
-/* ================================================================
-   MODULE: Background Media
-   Purpose:   fullscreen PNG/MP4 background layer.
-              The mute *button* itself is physically markup'd inside
-              the Sidebar module (see below) — this module only
-              owns the background layer + the mute button's
-              behavior, driven by id="videoMuteBtn" wherever it
-              physically lives in the DOM.
-   Depends:   Palette module. JS module "Background Media" below.
-              CROSS-MODULE: #videoMuteBtn lives in Sidebar's HTML,
-              not this module's HTML — see note there.
-   Remove:    removing this CSS block is safe on its own (only the
-              background layer disappears, page falls back to flat
-              --main-color). To fully remove the feature you also
-              need to delete #videoMuteBtn from the Sidebar module
-              and the JS module below.
-   ================================================================ */
 .bg-video, .bg-image {
   position: fixed;
   top: 0;
@@ -188,19 +149,6 @@ body {
   z-index: -1;
 }
 
-
-/* ================================================================
-   MODULE: Sidebar
-   Purpose:   fixed vertical icon rail, left side of viewport.
-              Holds: Discord link, GitHub link, mute toggle
-              (behavior owned by Background Media JS), theme
-              toggle (behavior owned by Theme JS).
-   Depends:   Palette module.
-   Remove:    yes — delete this CSS block and the matching HTML
-              block. If you do, also relocate #videoMuteBtn and
-              #themeToggle elsewhere, or their JS modules will
-              silently no-op (they check the element exists first).
-   ================================================================ */
 .sidebar {
   position: fixed;
   left: 24px;
@@ -268,19 +216,6 @@ body {
   }
 }
 
-
-/* ================================================================
-   MODULE: Topbar
-   Purpose:   centered horizontal nav, three site sections:
-              Portfolio / Resume / About Me.
-              Active-state highlighting only for now — actual page
-              switching is owned by the Router module (not yet
-              built). Each link carries data-route, ready for the
-              Router to intercept.
-   Depends:   Palette module. JS module "Topbar" below.
-   Remove:    yes — delete this CSS block, the matching HTML block,
-              and the matching JS block.
-   ================================================================ */
 .topbar {
   position: fixed;
   top: 24px;
@@ -335,78 +270,96 @@ body {
   .topbar-link svg { width: 17px; height: 17px; }
 }
 
-
-/* ================================================================
-   MODULE: Page Layout / View Root
-   Purpose:   the scrollable content column + the placeholder card.
-              #view is the future router's mount point — swap the
-              placeholder for real router-rendered content later.
-   Depends:   Palette module. Padding accounts for the fixed
-              Topbar (top) and Sidebar (left, desktop only).
-   Remove:    do not remove — this holds the actual page content.
-   ================================================================ */
 .page-wrap {
   flex: 1;
   display: flex;
 }
 .container {
-  max-width: 960px;
+  max-width: 980px;
   margin: 0 auto;
   padding: 120px 24px 160px;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 @media (min-width: 761px) {
   .container { padding-left: 100px; }
 }
 
-.placeholder {
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hero-band {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 32px;
+  padding: 48px 40px;
   background: var(--glass);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   border: 1px solid var(--glass-border);
   border-radius: 28px;
-  padding: 48px;
-  text-align: center;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
 }
-.placeholder h1 {
-  font-size: clamp(1.6rem, 4vw, 2.2rem);
+.hero-text h1 {
+  font-size: clamp(1.8rem, 5vw, 2.5rem);
   font-weight: 800;
-  letter-spacing: -0.02em;
-  margin-bottom: 10px;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin-bottom: 12px;
 }
-.placeholder p {
+.hero-text p {
+  font-size: 1rem;
   color: var(--text-muted);
-  font-size: 0.95rem;
+  max-width: 420px;
+  line-height: 1.6;
+}
+.hero-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 18px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border: 1px solid color-mix(in srgb, var(--green) 40%, transparent);
+  background: color-mix(in srgb, var(--green) 12%, transparent);
+  color: var(--green);
+}
+.hero-status .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+}
+.hero-avatar {
+  flex-shrink: 0;
+  width: 88px;
+  height: 88px;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 2px solid var(--glass-border);
+  background: rgba(255, 255, 255, 0.08);
+}
+.hero-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+@media (max-width: 560px) {
+  .hero-band { flex-direction: column-reverse; padding: 32px; }
+  .hero-avatar { width: 68px; height: 68px; }
 }
 
-
-/* ================================================================
-   MODULE: Bento Grid
-   Purpose:   the actual content grid — blank frosted-glass tiles
-              in various shapes/sizes. No content assigned yet;
-              just structure to build against.
-
-              Sizing convention: tile-{cols}x{rows}, e.g. tile-1x3
-              is 1 column wide, 3 rows tall. Base unit is one grid
-              cell (--bento-row tall x one grid-template-columns
-              track wide). Mix and match spans freely — a tile can
-              be any {cols}x{rows} combination, these classes just
-              cover the shapes discussed so far plus two bonus wide
-              variants (tile-2x1, tile-3x1) for symmetry with the
-              tall ones. Add more span combos the same way if a
-              future layout needs a shape not listed here.
-
-              tile-l is a true L-shaped card (not a rectangle) —
-              a 2x2 bounding box with one corner cut via clip-path.
-              backdrop-filter still respects the clipped shape in
-              current major browsers, but this is the one tile type
-              worth a visual sanity-check in Safari specifically if
-              it ever ships with real content.
-   Depends:   Palette module (--glass, --glass-border).
-   Remove:    yes — delete this CSS block and the matching HTML
-              block. No JS module backs this one; it's pure layout.
-   ================================================================ */
 .bento-grid {
+  position: relative;
   --bento-row: 130px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -414,8 +367,24 @@ body {
   gap: 20px;
 }
 
+.bento-spotlight {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  background: radial-gradient(
+    480px circle at var(--sx, 50%) var(--sy, 50%),
+    rgba(255, 255, 255, 0.08),
+    transparent 70%
+  );
+}
+.bento-grid:hover .bento-spotlight { opacity: 1; }
+
 .tile {
   position: relative;
+  z-index: 1;
   background: var(--glass);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
@@ -424,94 +393,187 @@ body {
   box-shadow:
     0 8px 32px rgba(0, 0, 0, 0.12),
     inset 0 1px 1px rgba(255, 255, 255, 0.15);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  transition: transform 0.15s ease, box-shadow 0.25s ease;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  text-align: center;
   overflow: hidden;
+  padding: 20px;
+  will-change: transform;
 }
 .tile:hover {
-  transform: translateY(-3px);
   box-shadow:
-    0 12px 40px rgba(0, 0, 0, 0.18),
+    0 14px 40px rgba(0, 0, 0, 0.18),
     inset 0 1px 1px rgba(255, 255, 255, 0.15);
 }
 
-.tile-label {
-  font-size: 0.78rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  color: var(--text-dim);
-  text-transform: uppercase;
+.tile::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  background: radial-gradient(
+    160px circle at var(--gx, 50%) var(--gy, 50%),
+    rgba(255, 255, 255, 0.18),
+    transparent 70%
+  );
   pointer-events: none;
 }
+.tile:hover::before { opacity: 1; }
 
-/* requested variants */
+.tile > * { position: relative; z-index: 1; }
+
+.tile-value {
+  font-size: 1.9rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  margin-bottom: 6px;
+  font-variant-numeric: tabular-nums;
+}
+.tile-value .suffix { font-size: 1.2rem; font-weight: 700; color: var(--accent); }
+.tile-label {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.tile-work {
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: right;
+  gap: 16px;
+  padding: 20px 26px;
+}
+.tile-work-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  overflow: hidden;
+  flex-shrink: 0;
+  border: 1.5px solid var(--glass-border);
+  background: rgba(255, 255, 255, 0.08);
+}
+.tile-work-icon img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.tile-work-info { flex: 1; min-width: 0; }
+.tile-work-role { font-size: 0.93rem; font-weight: 700; }
+.tile-work-company { font-size: 0.82rem; color: var(--text-muted); margin: 2px 0 4px; }
+.tile-work-date { font-size: 0.75rem; color: var(--text-dim); }
+
+@media (max-width: 560px) {
+  .tile-work { text-align: left; }
+}
+
+.tile-contact {
+  flex-direction: row;
+  justify-content: space-between;
+  text-align: left;
+  padding: 28px 36px;
+}
+.tile-contact h2 {
+  font-size: 1.4rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 4px;
+}
+.tile-contact p { font-size: 0.9rem; color: var(--text-muted); }
+.tile-contact-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 22px;
+  border-radius: 12px;
+  background: var(--accent);
+  color: #0a0d13;
+  font-weight: 700;
+  font-size: 0.88rem;
+  text-decoration: none;
+  flex-shrink: 0;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+.tile-contact-btn:hover { background: var(--accent-light); transform: translateY(-2px); }
+.tile-contact-btn svg { width: 16px; height: 16px; }
+
+@media (max-width: 560px) {
+  .tile-contact { flex-direction: column; text-align: center; gap: 16px; }
+}
+
 .tile-1x1 { grid-column: span 1; grid-row: span 1; }
 .tile-1x2 { grid-column: span 1; grid-row: span 2; }
 .tile-1x3 { grid-column: span 1; grid-row: span 3; }
-.tile-2x2 { grid-column: span 2; grid-row: span 2; }
-
-.tile-l {
-  grid-column: span 2;
-  grid-row: span 2;
-  clip-path: polygon(0% 0%, 50% 0%, 50% 50%, 100% 50%, 100% 100%, 0% 100%);
-}
-
-/* bonus variants — wide counterparts to the tall 1x2 / 1x3 tiles */
 .tile-2x1 { grid-column: span 2; grid-row: span 1; }
+.tile-2x2 { grid-column: span 2; grid-row: span 2; }
 .tile-3x1 { grid-column: span 3; grid-row: span 1; }
+.tile-4x1 { grid-column: span 4; grid-row: span 1; }
+
+.tile-group {
+  grid-column: 1 / -1;
+  grid-row: span 2;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: var(--bento-row);
+  gap: 20px;
+}
+.tile-group > .tg-stat-1 { grid-column: 1; grid-row: 1; }
+.tile-group > .tg-stat-2 { grid-column: 2; grid-row: 1; }
+.tile-group > .tg-stat-3 { grid-column: 1; grid-row: 2; }
+.tile-group > .tg-stat-4 { grid-column: 2; grid-row: 2; }
+.tile-group > .tg-work-1 { grid-column: 3 / span 2; grid-row: 1; }
+.tile-group > .tg-work-2 { grid-column: 3 / span 2; grid-row: 2; }
+
+@media (max-width: 900px) {
+  .tile-group { grid-template-columns: repeat(2, 1fr); grid-row: span 4; }
+  .tile-group > .tg-stat-1 { grid-column: 1; grid-row: 1; }
+  .tile-group > .tg-stat-2 { grid-column: 2; grid-row: 1; }
+  .tile-group > .tg-stat-3 { grid-column: 1; grid-row: 2; }
+  .tile-group > .tg-stat-4 { grid-column: 2; grid-row: 2; }
+  .tile-group > .tg-work-1 { grid-column: 1 / span 2; grid-row: 3; }
+  .tile-group > .tg-work-2 { grid-column: 1 / span 2; grid-row: 4; }
+}
+@media (max-width: 560px) {
+  .tile-group { grid-template-columns: 1fr; grid-row: span 6; }
+  .tile-group > * { grid-column: 1 !important; }
+  .tile-group > .tg-stat-1 { grid-row: 1; }
+  .tile-group > .tg-stat-2 { grid-row: 2; }
+  .tile-group > .tg-stat-3 { grid-row: 3; }
+  .tile-group > .tg-stat-4 { grid-row: 4; }
+  .tile-group > .tg-work-1 { grid-row: 5; }
+  .tile-group > .tg-work-2 { grid-row: 6; }
+}
 
 @media (max-width: 900px) {
   .bento-grid { grid-template-columns: repeat(2, 1fr); }
+  .tile-4x1, .tile-3x1 { grid-column: span 2; }
 }
 @media (max-width: 560px) {
   .bento-grid { grid-template-columns: 1fr; }
-  /* on a single column, force every tile back to 1 column wide
-     so wide/L spans don't overflow the only available track */
-  .tile-2x2, .tile-l, .tile-2x1, .tile-3x1 { grid-column: span 1; }
+  .tile-2x2, .tile-2x1, .tile-3x1, .tile-4x1 { grid-column: span 1; }
 }
 
-
-/* ================================================================
-   MODULE: Accessibility
-   Purpose:   respect prefers-reduced-motion globally.
-   Depends:   nothing.
-   Remove:    do not remove.
-   ================================================================ */
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; animation: none !important; }
+  .reveal { opacity: 1; transform: none; }
+  .bento-spotlight, .tile::before { display: none; }
 }
 
 </style>
 </head>
 <body>
 
-<!-- ================================================================
-     MODULE: Archive Banner (markup)
-     Remove together with: CSS "Archive Banner", JS "Archive Banner"
-     ================================================================ -->
 <div class="archive-banner" id="archiveBanner">
   <span class="archive-icon">⚠</span>
   <span>This page is not complete</span>
   <button class="archive-close" id="archiveClose" aria-label="Dismiss banner" title="Dismiss">×</button>
 </div>
 
-<!-- ================================================================
-     MODULE: Background Media (markup)
-     Only the background layer lives here. The mute BUTTON is in
-     the Sidebar module below, but is driven by this module's JS.
-     Remove together with: CSS "Background Media", JS "Background Media"
-     ================================================================ -->
 <div id="backgroundMedia"></div>
 
-<!-- ================================================================
-     MODULE: Topbar (markup)
-     data-route on each link is a placeholder for the future Router
-     module — currently these are plain in-page anchors with
-     active-state tracking only, no real content switching yet.
-     Remove together with: CSS "Topbar", JS "Topbar"
-     ================================================================ -->
 <nav class="topbar" id="topbar" aria-label="Site sections">
   <a href="#/" class="topbar-link" data-route="/">
     <svg fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
@@ -539,14 +601,6 @@ body {
   </a>
 </nav>
 
-<!-- ================================================================
-     MODULE: Sidebar (markup)
-     #videoMuteBtn is functionally owned by the Background Media JS
-     module. #themeToggle is functionally owned by the Theme JS
-     module. Both are physically placed here for layout purposes.
-     Remove together with: CSS "Sidebar", JS "Sidebar" (icon links
-     only — the mute/theme buttons belong to their own modules).
-     ================================================================ -->
 <nav class="sidebar" aria-label="Quick actions">
 
   <a href="https://discord.com/users/1078466874301493368" target="_blank" rel="noopener" class="sidebar-btn" title="Discord">
@@ -563,7 +617,6 @@ body {
 
   <div class="sidebar-divider"></div>
 
-  <!-- owned by: Background Media JS module -->
   <button id="videoMuteBtn" class="sidebar-btn" title="Unmute video" aria-label="Toggle background audio" style="display:none;">
     <svg id="iconVolume" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
       <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
@@ -576,7 +629,6 @@ body {
     </svg>
   </button>
 
-  <!-- owned by: Theme JS module -->
   <button id="themeToggle" class="sidebar-btn" title="Toggle theme" aria-label="Toggle dark mode">
     <svg id="iconSun" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" style="display:none">
       <circle cx="12" cy="12" r="5"/>
@@ -592,44 +644,83 @@ body {
 
 </nav>
 
-<!-- ================================================================
-     MODULE: Page Layout / View Root (markup)
-     #view is the router's future mount point.
-     ================================================================ -->
 <div class="page-wrap">
   <div class="container">
     <main id="view">
-      <div class="bento-grid">
-        <div class="tile tile-2x2"><span class="tile-label">2 × 2</span></div>
-        <div class="tile tile-1x2"><span class="tile-label">1 × 2</span></div>
-        <div class="tile tile-1x1"><span class="tile-label">1 × 1</span></div>
-        <div class="tile tile-1x1"><span class="tile-label">1 × 1</span></div>
 
-        <div class="tile tile-1x3"><span class="tile-label">1 × 3</span></div>
-        <div class="tile tile-1x1"><span class="tile-label">1 × 1</span></div>
-
-        <div class="tile tile-3x1"><span class="tile-label">3 × 1</span></div>
-        <div class="tile tile-1x1"><span class="tile-label">1 × 1</span></div>
-
-        <div class="tile tile-2x1"><span class="tile-label">2 × 1</span></div>
-        <div class="tile tile-1x1"><span class="tile-label">1 × 1</span></div>
-        <div class="tile tile-1x1"><span class="tile-label">1 × 1</span></div>
+      <div class="hero-band reveal">
+        <div class="hero-text">
+          <h1>Hi, I'm Horizon</h1>
+          <p>Senior web Quality Assurance Engineer and a Junior software Quality Assurance Engineer</p>
+          <div class="hero-status">
+            <span class="dot"></span>
+            <span>Looking for Work</span>
+          </div>
+        </div>
+        <div class="hero-avatar">
+          <img src="/resources/pfp.png" alt="Profile" />
+        </div>
       </div>
+
+      <div class="bento-grid" id="bentoGrid">
+        <div class="bento-spotlight" id="bentoSpotlight"></div>
+
+        <div class="tile-group">
+          <div class="tile tile-1x1 tg-stat-1 reveal">
+            <div class="tile-value"><span class="count" data-target="160" data-suffix="+">0</span></div>
+            <div class="tile-label">Bugs reported</div>
+          </div>
+          <div class="tile tile-1x1 tg-stat-2 reveal">
+            <div class="tile-value"><span class="count" data-target="200" data-suffix="+ hrs">0</span></div>
+            <div class="tile-label">Testing Time</div>
+          </div>
+          <div class="tile tile-1x1 tg-stat-3 reveal">
+            <div class="tile-value"><span class="count" data-target="4" data-suffix="">0</span></div>
+            <div class="tile-label">Companies — <span style="color:var(--accent)">2 public</span></div>
+          </div>
+          <div class="tile tile-1x1 tg-stat-4 reveal">
+            <div class="tile-value"><span class="count" data-target="3" data-suffix="">0</span></div>
+            <div class="tile-label">Years of Experience</div>
+          </div>
+
+          <div class="tile tile-2x1 tile-work tg-work-1 reveal">
+            <div class="tile-work-icon"><img src="/resources/central.png" alt="Central" /></div>
+            <div class="tile-work-info">
+              <div class="tile-work-role">Lead QA</div>
+              <div class="tile-work-company">Central</div>
+              <div class="tile-work-date">July 2025 – Present</div>
+            </div>
+          </div>
+          <div class="tile tile-2x1 tile-work tg-work-2 reveal">
+            <div class="tile-work-icon"><img src="/resources/brilliant.png" alt="Brilliant" /></div>
+            <div class="tile-work-info">
+              <div class="tile-work-role">QA</div>
+              <div class="tile-work-company">Brilliant</div>
+              <div class="tile-work-date">January 2026 – Present</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tile tile-4x1 tile-contact reveal">
+          <div>
+            <h2>Get in Touch</h2>
+            <p>Email is not available right now. Use Discord instead.</p>
+          </div>
+          <a class="tile-contact-btn" href="https://discord.com/users/1078466874301493368" target="_blank" rel="noopener">
+            <svg fill="currentColor" stroke="none" viewBox="0 0 24 24">
+              <path d="M20.317 4.37a19.791 19.791 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 00.031.057 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
+            </svg>
+            Message me
+          </a>
+        </div>
+      </div>
+
     </main>
   </div>
 </div>
 
 <script>
 
-/* ================================================================
-   MODULE: Archive Banner
-   Purpose:    dismiss + collapse the "not complete" banner, and
-               remember the dismissal for the current tab session.
-   Depends on: #archiveBanner, #archiveClose
-   Remove:     yes, safely — nothing else in this file reads from
-               archiveBanner/archiveClose. Delete this whole block
-               plus its matching CSS and HTML modules.
-   ================================================================ */
 (function ArchiveBannerModule() {
   const banner = document.getElementById('archiveBanner');
   const closeBtn = document.getElementById('archiveClose');
@@ -645,19 +736,6 @@ body {
   });
 })();
 
-
-/* ================================================================
-   MODULE: Background Media
-   Purpose:    load /resources/background.png, falling back to
-               /resources/background.mp4 if the PNG isn't present.
-               Owns the mute toggle's behavior, even though the
-               button itself is physically placed in the Sidebar
-               module's HTML.
-   Depends on: #backgroundMedia, #videoMuteBtn, #iconVolume,
-               #iconVolumeMuted
-   Remove:     yes, safely — delete this block plus the matching
-               CSS module and #videoMuteBtn from Sidebar's HTML.
-   ================================================================ */
 (function BackgroundMediaModule() {
   const backgroundMedia = document.getElementById('backgroundMedia');
   const muteBtn = document.getElementById('videoMuteBtn');
@@ -724,7 +802,7 @@ body {
 
   function loadSavedVideoMuteState() {
     if (!backgroundVideo) return;
-    backgroundVideo.muted = true; // always start muted on load/refresh
+    backgroundVideo.muted = true;
     updateVolumeIcon();
   }
 
@@ -762,20 +840,6 @@ body {
   initializeBackground();
 })();
 
-
-/* ================================================================
-   MODULE: Theme
-   Purpose:    light/dark toggle, persisted via localStorage, with
-               system-preference fallback on first visit. Owns the
-               toggle's behavior, even though the button itself is
-               physically placed in the Sidebar module's HTML.
-   Depends on: #themeToggle, #iconSun, #iconMoon, [data-theme] on
-               <html>
-   Remove:     yes, safely — delete this block plus the matching
-               CSS module and #themeToggle from Sidebar's HTML.
-               Site stays on whatever data-theme is hardcoded on
-               <html> (currently "dark").
-   ================================================================ */
 (function ThemeModule() {
   const root   = document.documentElement;
   const toggle = document.getElementById('themeToggle');
@@ -800,19 +864,6 @@ body {
   });
 })();
 
-
-/* ================================================================
-   MODULE: Topbar
-   Purpose:    highlights whichever tab matches the current URL
-               hash. This is ACTIVE-STATE TRACKING ONLY — it does
-               not swap page content. That's the Router module's
-               job once built; this module is safe to keep as-is
-               when the Router is added (the Router will just also
-               start listening to hash changes for content).
-   Depends on: #topbar, .topbar-link[data-route]
-   Remove:     yes, safely — delete this block plus the matching
-               CSS and HTML modules.
-   ================================================================ */
 (function TopbarModule() {
   const topbar = document.getElementById('topbar');
   if (!topbar) return;
@@ -835,23 +886,80 @@ body {
   updateActive();
 })();
 
+(function ScrollRevealModule() {
+  const targets = document.querySelectorAll('.reveal');
+  if (!targets.length) return;
 
-/* ================================================================
-   MODULE: Router                                    [NOT YET BUILT]
-   Purpose:    will mount hash-routed views into #view, replacing
-               the Topbar module's "active-state only" behavior
-               with real content switching.
-   Depends on: #view, .topbar-link[data-route]
-   Remove:     n/a — add module here when built.
-   ================================================================ */
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        entry.target.querySelectorAll('.count').forEach(el => {
+          if (window.startCount) window.startCount(el);
+        });
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
 
+  targets.forEach(el => observer.observe(el));
+})();
 
-/* ================================================================
-   MODULE: Command Palette                            [NOT YET BUILT]
-   Purpose:    ⌘K / Ctrl+K quick-nav overlay.
-   Depends on: Router module (for navigation actions)
-   Remove:     n/a — add module here when built.
-   ================================================================ */
+(function CountingAnimationModule() {
+  function startCount(el) {
+    const target = parseInt(el.dataset.target, 10);
+    const suffix = el.dataset.suffix || '';
+    const duration = 1200;
+    const startTime = performance.now();
+
+    function easeOut(t) { return 1 - (1 - t) * (1 - t); }
+
+    function tick(now) {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const value = Math.round(easeOut(progress) * target);
+      el.textContent = value;
+      if (suffix) {
+        el.innerHTML = value + '<span class="suffix">' + suffix + '</span>';
+      }
+      if (progress < 1) requestAnimationFrame(tick);
+    }
+
+    requestAnimationFrame(tick);
+  }
+
+  window.startCount = startCount;
+})();
+
+(function BentoInteractionsModule() {
+  const grid = document.getElementById('bentoGrid');
+  const spotlight = document.getElementById('bentoSpotlight');
+  if (!grid) return;
+
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reducedMotion) return;
+
+  if (spotlight) {
+    grid.addEventListener('mousemove', (e) => {
+      const rect = grid.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width) * 100;
+      const y = ((e.clientY - rect.top) / rect.height) * 100;
+      grid.style.setProperty('--sx', x + '%');
+      grid.style.setProperty('--sy', y + '%');
+    });
+  }
+
+  const tiles = grid.querySelectorAll('.tile');
+  tiles.forEach(tile => {
+    tile.addEventListener('mousemove', (e) => {
+      const rect = tile.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width) * 100;
+      const y = ((e.clientY - rect.top) / rect.height) * 100;
+      tile.style.setProperty('--gx', x + '%');
+      tile.style.setProperty('--gy', y + '%');
+    });
+  });
+})();
 
 </script>
 
