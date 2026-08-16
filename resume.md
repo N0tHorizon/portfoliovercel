@@ -1,37 +1,49 @@
 # Horizon
 **Quality Assurance Engineer**
 
-📧 [lvblue0022@proton.me](mailto:lvblue0022@proton.me) • 🌐 [gghorizon.vercel.app](https://gghorizon.vercel.app/) • Discord • [GitHub](https://github.com/N0tHorizon)
+[Portfolio Website](https://gghorizon.vercel.app/) • [Discord](https://discord.com/users/1078466874301493368) • [GitHub](https://github.com/N0tHorizon)
 
 ---
 
 ## Summary
-
-Quality Assurance Engineer with almost 3 years of experience in bug tracking, test development, and QA team leadership. Experienced across Discord bot ecosystems and open source software projects. Committed to building structured testing processes and ensuring high-quality product delivery.
+Quality Assurance Engineer with almost 3 years of experience in Quality Assurance, test development, Collaboration, and Team leadership. Experienced across both dynamic and static websites and CLI software projects. Committed to verifying expected functionality while working alongside team members.
 
 ---
 
 ## Experience
 
-**QA Team Lead** — [Central](http://centralbot.xyz)
-*7/9/2025 – Present*
-- Hosted QA sessions with team members.
-- Documented 60+ bugs related to bot and website functions.
-- Proposed updates and ideas to the development team.
-- Reviewed applications submitted by QA candidates.
+**QA Team Lead** — [Central Bot](https://centralbot.xyz)  
+*July 2025 – Present*
+* Hosted QA sessions with team members.
+* Documented 70+ bugs related to bot and website functions.
+* Proposed updates and ideas to the development team.
+* Reviewed applications submitted by QA candidates.
 
-**Quality Assurance Engineer** — Brilliant
-*01/2026 – Present*
-- Assessed bot updates before production deployment to ensure quality standards were met.
+**Customer Support** — [Central Bot](https://centralbot.xyz)  
+*September 2025 – April 2026*
+* Assisted Customers with setting up the bot, management, and other issues.
+* Claimed and responded to support tickets to assist customers.
+* Worked alongside a team of other support agents and managers.
 
-**Voluntary QA Contributor** — [Win11Debloat](https://github.com/Raphire/Win11Debloat) *(Open Source)*
-- Tested update releases on a voluntary basis, verifying expected behavior and reporting regressions.
+**Quality Assurance Engineer & Team Manager** — Brilliant  
+*January 2026 – Present*
+* Tested updates related to the Brilliant bot before the updates were released to production.
 
-**QA Engineer** — Private Companies *(2 engagements, details withheld by request)*
-- Conducted quality assurance work across two private engagements.
+**Voluntary QA Contributor** — [Win11Debloat](https://github.com) *(Open Source)*  
+*Active Contributor*
+* Tested update releases on a voluntary basis, checking expected behavior and reporting bugs.
+
+**Web QA Practice Experience** — [Academy Bugs](https://academybugs.com/find-bugs/)  
+*February 2024 – March 2025*
+- Found all 25 intentional bugs.
+- Created mock bug reports.
+- Learned about website quality assurance basics and report writing.
+- Developed my own testing plan.
 
 ---
 
 ## Skills
+* **Quality Assurance** • Bug Tracking • Test Development • QA Reporting • Test Environment Setup • Documentation • Team Collaboration
+* **Languages & Web:** Python • JS • CSS • HTML • Selenium IDE
 
-Quality Assurance • Bug Tracking • Test Plan Development • Test Development • QA Reporting • Test Environment Setup • Technical Documentation • Team Collaboration • User Feedback Integration • Powershell • HTML • Linux • Selenium IDE • Cypress • Node.js
+*Last Updated: August 2026*
