@@ -803,12 +803,17 @@ body {
           <div class="tile tile-1x1 tg-stat-3 reveal">
             <div class="tile-value"><span class="count" data-target="4" data-suffix="">0</span></div>
             <div class="tile-label">Companies — <span style="color:var(--accent)">2 public</span></div>
+            <div class="tile tile-1x1 tg-stat-4 reveal"> 
+              <div class="tile-value">
+                <!-- Changed class to custom-count to trick the panel script -->
+                <span class="custom-count" data-start="2023-12-02">
+                  <span class="y-val">2</span>Y <span class="m-val">8</span>MO
+                </span>
+              </div> 
+              <div class="tile-label">Years of Experience</div>
+            </div>
           </div>
-          <div class="tile tile-1x1 tg-stat-4 reveal">
-            <div class="tile-value"><span class="count" data-target="2.7" data-suffix="">0</span></div>
-            <div class="tile-label">Years of Experience</div>
-          </div>
-
+          
           <div class="tile tile-2x1 tile-work tg-work-1 reveal">
             <div class="tile-work-icon"><img src="/resources/central.png" alt="Central" /></div>
             <div class="tile-work-info">
@@ -1130,17 +1135,32 @@ body {
     });
   }
 
-  const tiles = grid.querySelectorAll('.tile');
-  tiles.forEach(tile => {
-    tile.addEventListener('mousemove', (e) => {
-      const rect = tile.getBoundingClientRect();
-      const x = ((e.clientX - rect.left) / rect.width) * 100;
-      const y = ((e.clientY - rect.top) / rect.height) * 100;
-      tile.style.setProperty('--gx', x + '%');
-      tile.style.setProperty('--gy', y + '%');
-    });
-  });
-})();
+function updateExperienceSafely() {
+  const container = document.querySelector('.custom-count');
+  if (!container) return;
+
+  const startDate = new Date(container.getAttribute('data-start'));
+  const currentDate = new Date();
+  let totalMonths = (currentDate.getFullYear() - startDate.getFullYear()) * 12;
+  totalMonths += currentDate.getMonth() - startDate.getMonth();
+
+  if (currentDate.getDate() < startDate.getDate()) {
+    totalMonths--;
+  }
+  if (totalMonths < 0) totalMonths = 0;
+  const years = Math.floor(totalMonths / 12);
+  const months = totalMonths % 12;
+  const ySpan = container.querySelector('.y-val');
+  const mSpan = container.querySelector('.m-val');
+
+  if (ySpan) ySpan.textContent = years;
+  if (mSpan) mSpan.textContent = months;
+}
+
+
+updateExperienceSafely();
+setInterval(updateExperienceSafely, 86400000);
+
 
 </script>
 
