@@ -1425,8 +1425,9 @@ function populateHome(config) {
     heroStatus.style.color = s.color;
     heroStatus.style.borderColor = 'color-mix(in srgb, ' + s.color + ' 40%, transparent)';
     heroStatus.style.background = 'color-mix(in srgb, ' + s.color + ' 12%, transparent)';
-    heroStatus.dot.style.background = 'color-mix(in srgb, ' + s.color;
-    heroStatus.dot.style.color = 'color-mix(in srgb, ' + s.color;
+    const dot = heroStatus.querySelector('.dot');
+    dot.style.background = s.color;
+    dot.style.color = s.color;
   }
 
   const experienceCounter = document.getElementById('experienceCounter');
