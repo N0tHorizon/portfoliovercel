@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
-<link rel="icon" type="image/x-icon" href="/resources/pfp-circle.png">
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Horizon — In Development</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
 <style>
 
 :root {
@@ -342,6 +342,171 @@ body {
   display: flex;
   flex-direction: column;
   gap: 24px;
+  transition: opacity 0.16s ease, transform 0.16s ease;
+}
+#view.route-exit { opacity: 0; transform: translateY(6px); }
+#view.route-enter { opacity: 0; transform: translateY(6px); }
+
+.page-header h1 {
+  font-size: clamp(1.6rem, 4.5vw, 2.2rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin-bottom: 6px;
+}
+.page-header p {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+.resume-wrap {
+  background: var(--glass);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--glass-border);
+  border-radius: 28px;
+  padding: 48px 52px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+}
+@media (max-width: 560px) {
+  .resume-wrap { padding: 32px 24px; }
+}
+
+.resume-content h1 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin-bottom: 4px;
+}
+.resume-content h2 {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 28px 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--glass-border);
+}
+.resume-content h3 {
+  font-size: 0.97rem;
+  font-weight: 700;
+  margin: 16px 0 2px;
+}
+.resume-content h4 {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+.resume-content p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin-bottom: 8px;
+}
+.resume-content ul {
+  list-style: none;
+  padding: 0;
+  margin: 4px 0 12px;
+}
+.resume-content ul li {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  padding: 3px 0 3px 18px;
+  position: relative;
+  line-height: 1.6;
+}
+.resume-content ul li::before {
+  content: '–';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-weight: 700;
+}
+.resume-content a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+}
+.resume-content a:hover { text-decoration: underline; }
+.resume-content strong { color: var(--text); font-weight: 600; }
+.resume-content em { color: var(--text-dim); font-style: normal; font-size: 0.82rem; }
+.resume-content code {
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 0.82rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--glass-border);
+  padding: 2px 8px;
+  border-radius: 6px;
+  color: var(--accent);
+}
+.resume-content hr {
+  border: none;
+  border-top: 1px solid var(--glass-border);
+  margin: 20px 0;
+}
+.resume-content > p:first-of-type {
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  margin-bottom: 4px;
+}
+
+.state-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 64px 24px;
+  text-align: center;
+}
+.state-box .icon { font-size: 2rem; }
+.state-box p { font-size: 0.9rem; color: var(--text-muted); }
+.spinner {
+  width: 28px;
+  height: 28px;
+  border: 2px solid var(--glass-border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.resume-footer {
+  padding: 16px 20px;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.resume-footer .footer-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+.resume-footer .footer-left strong { color: var(--text); font-weight: 600; }
+.footer-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--text-dim);
+  flex-shrink: 0;
+}
+.footer-note {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  font-style: italic;
+}
+@media (max-width: 560px) {
+  .resume-footer { flex-direction: column; align-items: flex-start; gap: 6px; }
 }
 
 .reveal {
@@ -518,6 +683,7 @@ body {
   font-weight: 500;
   line-height: 1.3;
 }
+.stat-note { color: var(--accent); }
 
 .tile-work {
   flex-direction: row;
@@ -773,7 +939,11 @@ body {
 
 <div class="page-wrap">
   <div class="container">
-    <main id="view">
+    <main id="view"></main>
+  </div>
+</div>
+
+<template id="route-home">
 
       <div class="hero-band reveal">
         <div class="hero-text">
@@ -795,15 +965,15 @@ body {
         <div class="tile-group">
           <div class="tile tile-1x1 tg-stat-1 reveal">
             <div class="tile-value"><span class="count" id="statBugs" data-target="160" data-suffix="+">0</span></div>
-            <div class="tile-label">Bugs reported</div>
+            <div class="tile-label" id="statBugsLabel">Bugs reported<span class="stat-note" id="statBugsNote"></span></div>
           </div>
           <div class="tile tile-1x1 tg-stat-2 reveal">
             <div class="tile-value"><span class="count" id="statTesting" data-target="240" data-suffix="+ hrs">0</span></div>
-            <div class="tile-label">Testing Time</div>
+            <div class="tile-label" id="statTestingLabel">Testing Time<span class="stat-note" id="statTestingNote"></span></div>
           </div>
           <div class="tile tile-1x1 tg-stat-3 reveal">
             <div class="tile-value"><span class="count" id="statCompanies" data-target="4" data-suffix="">0</span></div>
-            <div class="tile-label">Companies — <span id="statCompaniesNote" style="color:var(--accent)">2 public</span></div>
+            <div class="tile-label" id="statCompaniesLabel">Companies<span class="stat-note" id="statCompaniesNote"> — 2 public</span></div>
           </div>
             <div class="tile tile-1x1 tg-stat-4 reveal">
               <div class="tile-value">
@@ -847,9 +1017,43 @@ body {
         </div>
       </div>
 
-    </main>
-  </div>
-</div>
+</template>
+
+<template id="route-resume">
+
+      <div class="page-header reveal">
+        <h1>Resume</h1>
+        <p>My full professional history &amp; experience.</p>
+      </div>
+
+      <div class="resume-wrap reveal">
+        <div class="resume-content" id="resumeContent">
+          <div class="state-box">
+            <div class="spinner"></div>
+            <p>Loading resume…</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="resume-footer reveal">
+        <div class="footer-left">
+          <span>Last updated:</span>
+          <div class="footer-dot"></div>
+          <strong id="lastUpdated">—</strong>
+        </div>
+        <span class="footer-note">Info may not be up to date.</span>
+      </div>
+
+</template>
+
+<template id="route-about">
+
+      <div class="tile reveal" style="padding: 56px 40px; text-align: center;">
+        <h1 style="font-size: 1.6rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 10px;">About Me</h1>
+        <p style="color: var(--text-muted); font-size: 0.95rem;">This page is coming soon.</p>
+      </div>
+
+</template>
 
 <script>
 
@@ -1073,7 +1277,7 @@ body {
   updateActive();
 })();
 
-(function ScrollRevealModule() {
+function initScrollReveal() {
   const targets = document.querySelectorAll('.reveal');
   if (!targets.length) return;
 
@@ -1090,7 +1294,7 @@ body {
   }, { threshold: 0.15 });
 
   targets.forEach(el => observer.observe(el));
-})();
+}
 
 (function CountingAnimationModule() {
   function startCount(el) {
@@ -1118,7 +1322,7 @@ body {
   window.startCount = startCount;
 })();
 
-(function BentoInteractionsModule() {
+function initBentoInteractions() {
   const grid = document.getElementById('bentoGrid');
   const spotlight = document.getElementById('bentoSpotlight');
   if (!grid) return;
@@ -1135,7 +1339,7 @@ body {
       grid.style.setProperty('--sy', y + '%');
     });
   }
-})();
+}
 
 function updateExperienceSafely() {
   const container = document.getElementById('experienceCounter');
@@ -1159,95 +1363,202 @@ function updateExperienceSafely() {
   if (mSpan) mSpan.textContent = months;
 }
 
-(function ConfigModule() {
-  fetch('/config.json')
+let cachedConfig = null;
+let configPromise = null;
+
+function resolveColor(c) {
+  const palette = ['accent', 'accent-light', 'accent-dark', 'red', 'brown', 'green', 'blue', 'purple', 'dark-grey'];
+  return palette.includes(c) ? 'var(--' + c + ')' : c;
+}
+
+function applyGlobalConfig(config) {
+  const links = config.socialLinks || {};
+  document.querySelectorAll('a[title="Discord"]').forEach(a => {
+    if (links.discord) a.href = links.discord;
+  });
+  document.querySelectorAll('a[title="GitHub"]').forEach(a => {
+    if (links.github) a.href = links.github;
+  });
+}
+
+function fetchConfig() {
+  if (configPromise) return configPromise;
+  configPromise = fetch('/config.json')
     .then(res => {
       if (!res.ok) throw new Error('HTTP ' + res.status);
       return res.json();
     })
     .then(config => {
-      const p = config.personal || {};
-      const heroTitle = document.getElementById('heroTitle');
-      const heroTagline = document.getElementById('heroTagline');
-      const heroStatus = document.getElementById('heroStatus');
-      const heroStatusText = document.getElementById('heroStatusText');
-      const heroAvatarImg = document.getElementById('heroAvatarImg');
-
-      if (heroTitle && p.name) heroTitle.textContent = "Hi, I'm " + p.name;
-      if (heroTagline && p.tagline) heroTagline.textContent = p.tagline;
-      if (heroAvatarImg && p.avatar) heroAvatarImg.src = p.avatar;
-
-      if (heroStatus && heroStatusText && p.workStatus) {
-        const statusMap = {
-          1: { text: 'Looking for Work', color: 'var(--green)' },
-          2: { text: 'Commissions Open', color: 'var(--green)' },
-          3: { text: 'Not Looking for Work', color: 'var(--red)' }
-        };
-        const s = statusMap[p.workStatus] || statusMap[1];
-        heroStatusText.textContent = s.text;
-        heroStatus.style.color = s.color;
-        heroStatus.style.borderColor = 'color-mix(in srgb, ' + s.color + ' 40%, transparent)';
-        heroStatus.style.background = 'color-mix(in srgb, ' + s.color + ' 12%, transparent)';
-      }
-
-      const experienceCounter = document.getElementById('experienceCounter');
-      if (experienceCounter && p.qaStartDate) {
-        experienceCounter.setAttribute('data-start', p.qaStartDate);
-        updateExperienceSafely();
-      }
-
-      const stats = config.stats || {};
-      function applyStat(id, statData) {
-        const el = document.getElementById(id);
-        if (!el || !statData) return;
-        if (typeof statData.value !== 'undefined') el.dataset.target = statData.value;
-        if (typeof statData.suffix !== 'undefined') el.dataset.suffix = statData.suffix;
-      }
-      applyStat('statBugs', stats.bugsReported);
-      applyStat('statTesting', stats.testingTime);
-      applyStat('statCompanies', stats.companies);
-
-      const companiesNote = document.getElementById('statCompaniesNote');
-      if (companiesNote && stats.companies && stats.companies.note) {
-        companiesNote.textContent = stats.companies.note;
-      }
-
-      const work = config.workExperience || [];
-      function applyWork(index, iconId, roleId, companyId, dateId) {
-        const entry = work[index];
-        if (!entry) return;
-        const iconEl = document.getElementById(iconId);
-        const roleEl = document.getElementById(roleId);
-        const companyEl = document.getElementById(companyId);
-        const dateEl = document.getElementById(dateId);
-        if (iconEl && entry.icon) { iconEl.src = entry.icon; iconEl.alt = entry.company || ''; }
-        if (roleEl && entry.role) roleEl.textContent = entry.role;
-        if (companyEl && entry.company) companyEl.textContent = entry.company;
-        if (dateEl && entry.dateRange) dateEl.innerHTML = '<span style="color:var(--accent)">' + entry.dateRange + '</span>';
-      }
-      applyWork(0, 'work1Icon', 'work1Role', 'work1Company', 'work1Date');
-      applyWork(1, 'work2Icon', 'work2Role', 'work2Company', 'work2Date');
-
-      const contactMessage = document.getElementById('contactMessage');
-      if (contactMessage && p.contactMessage) contactMessage.textContent = p.contactMessage;
-
-      const links = config.socialLinks || {};
-      const contactBtn = document.getElementById('contactBtn');
-      if (contactBtn && links.discord) contactBtn.href = links.discord;
-
-      document.querySelectorAll('a[title="Discord"]').forEach(a => {
-        if (links.discord) a.href = links.discord;
-      });
-      document.querySelectorAll('a[title="GitHub"]').forEach(a => {
-        if (links.github) a.href = links.github;
-      });
+      cachedConfig = config;
+      applyGlobalConfig(config);
+      return config;
     })
     .catch(err => {
       console.warn('config.json not loaded, using fallback content:', err.message);
+      return null;
     });
+  return configPromise;
+}
+
+function populateHome(config) {
+  if (!config) return;
+
+  const p = config.personal || {};
+  const heroTitle = document.getElementById('heroTitle');
+  const heroTagline = document.getElementById('heroTagline');
+  const heroStatus = document.getElementById('heroStatus');
+  const heroStatusText = document.getElementById('heroStatusText');
+  const heroAvatarImg = document.getElementById('heroAvatarImg');
+
+  if (heroTitle && p.name) heroTitle.textContent = "Hi, I'm " + p.name;
+  if (heroTagline && p.tagline) heroTagline.textContent = p.tagline;
+  if (heroAvatarImg && p.avatar) heroAvatarImg.src = p.avatar;
+
+  if (heroStatus && heroStatusText && p.workStatus) {
+    const statusMap = {
+      1: { text: 'Looking for Work', color: 'var(--green)' },
+      2: { text: 'Commissions Open', color: 'var(--green)' },
+      3: { text: 'Not Looking for Work', color: 'var(--red)' }
+    };
+    const s = statusMap[p.workStatus] || statusMap[1];
+    heroStatusText.textContent = s.text;
+    heroStatus.style.color = s.color;
+    heroStatus.style.borderColor = 'color-mix(in srgb, ' + s.color + ' 40%, transparent)';
+    heroStatus.style.background = 'color-mix(in srgb, ' + s.color + ' 12%, transparent)';
+  }
+
+  const experienceCounter = document.getElementById('experienceCounter');
+  if (experienceCounter && p.qaStartDate) {
+    experienceCounter.setAttribute('data-start', p.qaStartDate);
+    updateExperienceSafely();
+  }
+
+  const stats = config.stats || {};
+
+  function applyStat(valueId, noteId, statData) {
+    if (!statData) return;
+    const valueEl = document.getElementById(valueId);
+    const noteEl = document.getElementById(noteId);
+
+    if (valueEl) {
+      if (typeof statData.value !== 'undefined') valueEl.dataset.target = statData.value;
+      if (typeof statData.suffix !== 'undefined') valueEl.dataset.suffix = statData.suffix;
+      if (statData.color) valueEl.style.color = resolveColor(statData.color);
+    }
+    if (noteEl && typeof statData.note !== 'undefined') {
+      noteEl.textContent = statData.note ? ' — ' + statData.note : '';
+    }
+  }
+
+  applyStat('statBugs', 'statBugsNote', stats.bugsReported);
+  applyStat('statTesting', 'statTestingNote', stats.testingTime);
+  applyStat('statCompanies', 'statCompaniesNote', stats.companies);
+
+  const work = config.workExperience || [];
+  function applyWork(index, iconId, roleId, companyId, dateId) {
+    const entry = work[index];
+    if (!entry) return;
+    const iconEl = document.getElementById(iconId);
+    const roleEl = document.getElementById(roleId);
+    const companyEl = document.getElementById(companyId);
+    const dateEl = document.getElementById(dateId);
+    if (iconEl && entry.icon) { iconEl.src = entry.icon; iconEl.alt = entry.company || ''; }
+    if (roleEl && entry.role) roleEl.textContent = entry.role;
+    if (companyEl && entry.company) companyEl.textContent = entry.company;
+    if (dateEl && entry.dateRange) dateEl.innerHTML = '<span style="color:var(--accent)">' + entry.dateRange + '</span>';
+  }
+  applyWork(0, 'work1Icon', 'work1Role', 'work1Company', 'work1Date');
+  applyWork(1, 'work2Icon', 'work2Role', 'work2Company', 'work2Date');
+
+  const contactMessage = document.getElementById('contactMessage');
+  if (contactMessage && p.contactMessage) contactMessage.textContent = p.contactMessage;
+
+  const links = config.socialLinks || {};
+  const contactBtn = document.getElementById('contactBtn');
+  if (contactBtn && links.discord) contactBtn.href = links.discord;
+}
+
+function initResumeContent() {
+  const contentEl = document.getElementById('resumeContent');
+  if (!contentEl) return;
+
+  const RESUME_LAST_UPDATED = 'August 2026';
+  const lastUpdatedEl = document.getElementById('lastUpdated');
+  if (lastUpdatedEl) lastUpdatedEl.textContent = RESUME_LAST_UPDATED;
+
+  fetch('/resume.md')
+    .then(res => {
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      return res.text();
+    })
+    .then(md => {
+      marked.setOptions({ breaks: true, gfm: true });
+      contentEl.innerHTML = marked.parse(md);
+    })
+    .catch(err => {
+      contentEl.innerHTML =
+        '<div class="state-box">' +
+        '<span class="icon">📄</span>' +
+        '<p>Couldn\'t load <code>resume.md</code>.</p>' +
+        '<p style="font-size:0.78rem;color:var(--text-dim)">' + err.message + '</p>' +
+        '</div>';
+    });
+}
+
+(function RouterModule() {
+  const view = document.getElementById('view');
+  if (!view) return;
+
+  const routeMap = { '/': 'route-home', '/resume': 'route-resume', '/about': 'route-about' };
+
+  function currentRoute() {
+    const hash = window.location.hash.replace(/^#/, '');
+    return routeMap[hash] ? hash : '/';
+  }
+
+  function afterRender(path) {
+    initScrollReveal();
+    initBentoInteractions();
+    if (path === '/') {
+      updateExperienceSafely();
+      fetchConfig().then(cfg => populateHome(cfg));
+    } else if (path === '/resume') {
+      initResumeContent();
+    }
+  }
+
+  function swap(path) {
+    const template = document.getElementById(routeMap[path]);
+    if (!template) return;
+    view.innerHTML = '';
+    view.appendChild(template.content.cloneNode(true));
+    afterRender(path);
+  }
+
+  function render(path) {
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (reducedMotion) {
+      swap(path);
+      return;
+    }
+
+    view.classList.add('route-exit');
+    setTimeout(() => {
+      swap(path);
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          view.classList.remove('route-exit');
+          view.classList.remove('route-enter');
+        });
+      });
+    }, 160);
+  }
+
+  window.addEventListener('hashchange', () => render(currentRoute()));
+  render(currentRoute());
 })();
 
-updateExperienceSafely();
 setInterval(updateExperienceSafely, 86400000);
 
 </script>
