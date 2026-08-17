@@ -10,7 +10,7 @@
   "stats": {
     "bugsReported": { "value": 160, "suffix": "+" },
     "testingTime": { "value": 240, "suffix": "+ hrs" },
-    "companies": { "value": 4, "suffix": "", "note": "2 public" }
+    "companies": { "value": 3, "suffix": "" }
   },
   "workExperience": [
     {
