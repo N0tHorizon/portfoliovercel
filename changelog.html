@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Horizon — Changelog</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    /* --- Shared System Color Palette Variables --- */
+    :root {
+      --main-color: #a1a5a8;
+      --accent: #d4af37;
+      --accent-light: #e6c765;
+      --text: #0f172a;
+      --text-muted: #4b5563;
+      --text-dim: #6b7280;
+      --glass: rgba(255, 255, 255, 0.55);
+      --glass-border: rgba(255, 255, 255, 0.35);
+      --green: #40bf40;
+      --blue: #4080bf;
+      --red: #bf4040;
+    }
+
+    [data-theme="dark"] {
+      --main-color: #0a0d13;
+      --accent: #d4af37;
+      --accent-light: #e6c765;
+      --text: #f0f6fc;
+      --text-muted: #8b949e;
+      --text-dim: #565f6b;
+      --glass: rgba(20, 20, 30, 0.5);
+      --glass-border: rgba(255, 255, 255, 0.12);
+      --green: #19e619;
+      --blue: #1973e6;
+      --red: #e61919;
+    }
+
+    /* --- Base Layout Rules --- */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--main-color);
+      color: var(--text);
+      line-height: 1.6;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      padding: 60px 20px;
+    }
+
+    /* --- Frosted Glass Container --- */
+    .changelog-container {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      width: 100%;
+      max-width: 680px;
+      padding: 40px;
+      border-radius: 24px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    }
+
+    /* --- Header Typography --- */
+    .header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--glass-border);
+      padding-bottom: 24px;
+    }
+
+    .header h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-top: 16px;
+    }
+
+    /* --- Back Button --- */
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--glass-border);
+      transition: all 0.2s ease;
+    }
+
+    .back-btn:hover {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.15);
+      transform: translateX(-2px);
+    }
+
+    [data-theme="dark"] .back-btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .back-btn svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    /* --- Section Typography --- */
+    .section-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin: 28px 0 14px;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-title:first-of-type {
+      margin-top: 0;
+    }
+
+    /* --- Change Item Layout --- */
+    .list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .item {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    /* --- Color Mix Badges --- */
+    .badge {
+      font-size: 10px;
+      text-transform: uppercase;
+      font-weight: 800;
+      padding: 2px 7px;
+      border-radius: 6px;
+      flex-shrink: 0;
+      letter-spacing: 0.5px;
+      margin-top: 2px;
+    }
+
+    .badge-add { background: color-mix(in srgb, var(--green) 20%, transparent); color: var(--green); }
+    .badge-fix { background: color-mix(in srgb, var(--accent) 20%, transparent); color: var(--accent); }
+    .badge-remove { background: color-mix(in srgb, var(--red) 20%, transparent); color: var(--red); }
+
+    /* Footer text style matching discord -# small style */
+    footer {
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid var(--glass-border);
+    }
+
+    small {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="changelog-container">
+    <header class="header">
+      <!-- Back Home Navigation Button -->
+      <a href="index.html" class="back-btn">
+        <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+        Back to Home
+      </a>
+      <h1>Portfolio v2 changelog</h1>
+    </header>
+
+    <main>
+      <!-- New Features Section -->
+      <h2 class="section-title">New Features</h2>
+      <div class="list">
+        <div class="item"><span class="badge badge-add">New</span> ✨ Rewrote the whole page into a SPA</div>
+        <div class="item"><span class="badge badge-add">New</span> Added 404 page</div>
+        <div class="item"><span class="badge badge-add">New</span> Full color palette setup for light/dark modes</div>
+        <div class="item"><span class="badge badge-add">New</span> New tile system (bento grid)</div>
+        <div class="item"><span class="badge badge-add">New</span> New statistic tiles</div>
+        <div class="item"><span class="badge badge-add">New</span> Sidebar navigation</div>
+        <div class="item"><span class="badge badge-add">New</span> Organized project folder</div>
+        <div class="item"><span class="badge badge-add">New</span> Dynamic content loading</div>
+        <div class="item"><span class="badge badge-add">New</span> Resume page overhaul</div>
+        <div class="item"><span class="badge badge-add">New</span> Tiles and portfolio overhaul</div>
+        <div class="item"><span class="badge badge-add">New</span> New refresh animation</div>
+        <div class="item"><span class="badge badge-add">New</span> Light/Dark mode animations</div>
+        <div class="item"><span class="badge badge-add">New</span> Tab switching and hovering animations</div>
+        <div class="item"><span class="badge badge-add">New</span> Dynamically updating experience time</div>
+        <div class="item"><span class="badge badge-add">New</span> Contact tile</div>
+        <div class="item"><span class="badge badge-add">New</span> Sidebar button to legacy page</div>
+      </div>
+
+      <!-- Bug Fixes Section -->
+      <h2 class="section-title">Bug Fixes</h2>
+      <div class="list">
+        <div class="item"><span class="badge badge-fix">Fixed</span> Continuous background playback</div>
+        <div class="item"><span class="badge badge-fix">Fixed</span> Content not found errors even when content was present</div>
+        <div class="item"><span class="badge badge-fix">Fixed</span> Responsive design issues on smaller screens</div>
+        <div class="item"><span class="badge badge-fix">Fixed</span> Frosted glass effect now is see through</div>
+        <div class="item"><span class="badge badge-fix">Fixed</span> png/mp4 background loading</div>
+        <div class="item"><span class="badge badge-fix">Fixed</span> Audio playback for background</div>
+        <div class="item"><span class="badge badge-fix">Fixed</span> Redirect errors to existing pages</div>
+      </div>
+
+      <!-- Removed Section -->
+      <h2 class="section-title">Removed Items</h2>
+      <div class="list">
+        <div class="item"><span class="badge badge-remove">Removed</span> Config.json & extended loading times</div>
+        <div class="item"><span class="badge badge-remove">Removed</span> Unused resources and media</div>
+      </div>
+    </main>
+
+    <footer>
+      <small>Yes I know I'm the only person that makes changelogs for their portfolios 😶‍🌫️</small>
+    </footer>
+  </div>
+
+</body>
+</html>
