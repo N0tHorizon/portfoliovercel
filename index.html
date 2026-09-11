@@ -380,93 +380,6 @@ body {
   margin-bottom: 4px;
 }
 
-/* CHANGELOG */
-.cl-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 99999; 
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
-}
-[data-theme="dark"] .cl-overlay {
-  background: rgba(0, 0, 0, 0.65);
-}
-
-
-.cl-card {
-  background: var(--glass);
-  border: 1px solid var(--glass-border);
-  color: var(--text);
-  width: 90%;
-  max-width: 440px;
-  padding: 32px 28px;
-  border-radius: 24px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
-  position: relative;
-  transform: scale(0.85) translateY(20px);
-  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-
-.cl-overlay.active {
-  opacity: 1;
-  visibility: visible;
-}
-.cl-overlay.active .cl-card {
-  transform: scale(1) translateY(0);
-}
-
-
-.cl-close {
-  position: absolute;
-  top: 18px;
-  right: 18px;
-  background: none;
-  border: none;
-  font-size: 26px;
-  line-height: 1;
-  color: var(--text-muted);
-  cursor: pointer;
-  transition: color 0.2s ease, transform 0.2s ease;
-}
-.cl-close:hover {
-  color: var(--text);
-  transform: scale(1.1);
-}
-
-
-.cl-header h3 { font-size: 1.35rem; font-weight: 700; margin-bottom: 4px; }
-.cl-date { font-size: 0.85rem; color: var(--text-dim); margin-bottom: 24px; font-weight: 500; }
-.cl-body { display: flex; flex-direction: column; gap: 16px; }
-.cl-item { font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; display: flex; gap: 10px; align-items: flex-start; }
-
-.tag-add, .tag-fix, .tag-removed, .tag-other {
-  font-size: 10px;
-  text-transform: uppercase;
-  font-weight: 800;
-  padding: 2px 7px;
-  border-radius: 6px;
-  flex-shrink: 0;
-  letter-spacing: 0.5px;
-}
-.tag-add  { background: color-mix(in srgb, var(--green) 20%, transparent); color: var(--green); }
-.tag-fix  { background: color-mix(in srgb, var(--brown) 20%, transparent); color: var(--brown); }
-.tag-removed { background: color-mix(in srgb, var(--red) 20%, transparent); color: var(--red); }
-.tag-other { background: color-mix(in srgb, var(--blue) 20%, transparent); color: var(--blue); }
-
-/* END CHANGELOGG */
-
-
 .state-box {
   display: flex;
   flex-direction: column;
@@ -1064,36 +977,6 @@ body {
       </div>
 
 </template>
-
-<!-- Changelog -->
-<div class="cl-overlay" id="changelogModal">
-
-  <div class="cl-card">
-    <button class="cl-close" id="closeChangelog">&times;</button>
-    <div class="cl-header">
-      <h3>🚀 Version 2.0 Is Live</h3>
-      <p class="cl-date">Released August 2026</p>
-    </div>
-    <div class="cl-body">
-      <div class="cl-item"><span class="tag-add">New</span> Changed into a full SPA</div>
-      <div class="cl-item"><span class="tag-add">New</span> Added 404 page</div>
-      <div class="cl-item"><span class="tag-add">New</span> Full color palette setup for light/dark modes</div>
-      <div class="cl-item"><span class="tag-add">New</span> New tile system (bento grid)</div>
-      <div class="cl-item"><span class="tag-add">New</span> New statistic tiles</div>
-      <div class="cl-item"><span class="tag-add">New</span> Sidebar navigation</div>
-      <div class="cl-item"><span class="tag-add">New</span> Organized project folder</div>
-      <div class="cl-item"><span class="tag-add">New</span> Dynamic content loading</div>
-      <div class="cl-item"><span class="tag-add">New</span> Resume page overhaul</div>
-      <div class="cl-item"><span class="tag-add">New</span> Tiles and portfolio overhaul</div>
-      <div class="cl-item"><span class="tag-fix">Fixed</span> Continuous background playback</div>
-      <div class="cl-item"><span class="tag-fix">Fixed</span> Content not found errors even when content was present</div>
-      <div class="cl-item"><span class="tag-fix">Fixed</span> Responsive design issues on smaller screens</div>
-      <div class="cl-item"><span class="tag-removed">Removed</span> Config.json & extended loading times</div>
-      <div class="cl-item"><span class="tag-other">Full List</span> Much more is included in the<a href="/changelog.html">full changelog</a></div>
-    </div>
-  </div>
-</div>
-
 
 <script>
 
