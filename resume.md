@@ -39,7 +39,6 @@ Quality Assurance Engineer with almost 3 years of experience in Quality Assuranc
 
 **Core Team** — [Brilliant](https://brilliantbot.app/)
 *November 2026 - Present*
-* unavail
 
 ### Other
 **Voluntary QA Contributor** — [Win11Debloat](https://github.com) *(Open Source)* 
