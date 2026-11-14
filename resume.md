@@ -25,9 +25,13 @@ Quality Assurance Engineer with almost 3 years of experience in Quality Assuranc
 * Claimed and responded to support tickets to assist customers.
 * Worked alongside a team of other support agents and managers.
 
-**Quality Assurance Engineer & Team Manager** — Brilliant  
-*January 2026 – Present*
-* Tested updates related to the Brilliant bot before the updates were released to production.
+**Quality Assurance Engineer & Team Manager** — [Brilliant](https://brilliantbot.app/)
+*January 2026 – November 2026*
+* Tested updates related to the Brilliant bot before the updates were released to production.*
+
+**Quality Assurance Engineer & Core Team** — [Brilliant](https://brilliantbot.app/)
+*November 2026 - Present*
+* unavail*
 
 **Voluntary QA Contributor** — [Win11Debloat](https://github.com) *(Open Source)*  
 *Active Contributor*
