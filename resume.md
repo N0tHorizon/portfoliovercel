@@ -11,13 +11,11 @@ Quality Assurance Engineer with almost 3 years of experience in Quality Assuranc
 ---
 
 ## Experience
-
-**QA Team Lead** — [Central Bot](https://centralbot.xyz)  
-*July 2025 – Present*
-* Hosted QA sessions with team members.
+### Central Bot
+**Quality Assurance Engineer** — [Central Bot](https://centralbot.xyz)  
+*July 2025 - Present*
 * Documented 70+ bugs related to bot and website functions.
-* Proposed updates and ideas to the development team.
-* Reviewed applications submitted by QA candidates.
+* Found and documented vulnerability bugs on the website.
 
 **Customer Support** — [Central Bot](https://centralbot.xyz)  
 *September 2025 – April 2026*
@@ -25,16 +23,26 @@ Quality Assurance Engineer with almost 3 years of experience in Quality Assuranc
 * Claimed and responded to support tickets to assist customers.
 * Worked alongside a team of other support agents and managers.
 
-**Quality Assurance Engineer & Team Manager** — [Brilliant](https://brilliantbot.app/)
-*January 2026 – November 2026*
+**QA Team Lead** — [Central Bot](https://centralbot.xyz)  
+*January 2026 – Present*
+* Hosted QA sessions with team members.
+* Proposed updates and ideas to the development team.
+* Reviewed applications submitted by QA candidates.
+
+### Brilliant
+**Quality Assurance Engineer** — [Brilliant](https://brilliantbot.app/)
+*January 2026 - Present*
 * Tested updates related to the Brilliant bot before the updates were released to production.
 
-**Quality Assurance Engineer & Core Team** — [Brilliant](https://brilliantbot.app/)
+**Manager** — [Brilliant](https://brilliantbot.app/)
+*July 2026 – November 2026*
+
+**Core Team** — [Brilliant](https://brilliantbot.app/)
 *November 2026 - Present*
 * unavail
 
-**Voluntary QA Contributor** — [Win11Debloat](https://github.com) *(Open Source)*  
-*Active Contributor*
+### Other
+**Voluntary QA Contributor** — [Win11Debloat](https://github.com) *(Open Source)* 
 * Tested update releases on a voluntary basis, checking expected behavior and reporting bugs.
 
 **Web QA Practice Experience** — [Academy Bugs](https://academybugs.com/find-bugs/)  
@@ -50,4 +58,4 @@ Quality Assurance Engineer with almost 3 years of experience in Quality Assuranc
 * **Quality Assurance** • Bug Tracking • Test Development • QA Reporting • Test Environment Setup • Documentation • Team Collaboration
 * **Languages & Web:** Python • JS • CSS • HTML • Selenium IDE
 
-*Last Updated: August 2026*
+*Last Updated: November 2026*
