@@ -1,7 +1,7 @@
 # Horizon
 **Quality Assurance Engineer**
 
-[Portfolio Website](https://gghorizon.vercel.app/) • [Discord](https://discord.com/users/1078466874301493368) • [GitHub](https://github.com/N0tHorizon)
+[Portfolio Website](https://gghorizon.vercel.app/) • nothorizoncontact@gmail.com • [GitHub](https://github.com/N0tHorizon)
 
 ---
 
